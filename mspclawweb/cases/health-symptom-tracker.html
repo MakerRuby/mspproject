@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>健康与症状追踪器 | MSP-龙虾应用案例</title>
+  <meta name="description" content="识别食物敏感性需要长期持续的记录，这很容易变得乏味。你需要提醒来进行记录，以及需要分析来发现规律。" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>生产力工具</span>
+      <span data-en>Productivity</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>健康与症状追踪器</span>
+      <span data-en>Health & Symptom Tracker</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/health-symptom-tracker.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"健康与症状追踪器","content":"# 健康与症状追踪器\n\n识别食物敏感性需要长期持续的记录，这很容易变得乏味。你需要提醒来进行记录，以及需要分析来发现规律。\n\n这个工作流程可以自动追踪食物和症状：\n\n• 在专用的 Telegram 话题中发送你的食物和症状信息，OpenClaw 会自动记录一切并标上时间戳\n• 每天 3 次提醒（早上、中午、晚上）促使你记录饮食\n• 随着时间推移，分析规律以识别潜在的触发因素\n\n## 你需要的技能\n\n- 定时任务（Cron jobs）用于提醒\n- Telegram 话题用于记录\n- 文件存储（Markdown 日志文件）\n\n## 如何设置\n\n1. 创建一个名为 \"health-tracker\"（或类似名称）的 Telegram 话题。\n2. 创建一个日志文件：`~/clawd/memory/health-log.md`\n3. 向 OpenClaw 提示：\n```text\nWhen I message in the \"health-tracker\" topic:\n1. Parse the message for food items and symptoms\n2. Log to ~/clawd/memory/health-log.md with timestamp\n3. Confirm what was logged\n\nSet up 3 daily reminders:\n- 8 AM: \"🍳 Log your breakfast\"\n- 1 PM: \"🥗 Log your lunch\"\n- 7 PM: \"🍽️ Log your dinner and any symptoms\"\n\nEvery Sunday, analyze the past week's log and identify patterns:\n- Which foods correlate with symptoms?\n- Are there time-of-day patterns?\n- Any clear triggers?\n\nPost the analysis to the health-tracker topic.\n```\n\n4. 可选：添加一个记忆文件供 OpenClaw 跟踪已知的触发因素，并在规律出现时进行更新。"},"en":{"name":"Health & Symptom Tracker","content":"# Health & Symptom Tracker\n\nIdentifying food sensitivities requires consistent logging over time, which is tedious to maintain. You need reminders to log and analysis to spot patterns.\n\nThis workflow tracks food and symptoms automatically:\n\n• Message your food and symptoms in a dedicated Telegram topic and OpenClaw logs everything with timestamps\n• 3x daily reminders (morning, midday, evening) prompt you to log meals\n• Over time, analyzes patterns to identify potential triggers\n\n## Skills you Need\n\n- Cron jobs for reminders\n- Telegram topic for logging\n- File storage (markdown log file)\n\n## How to Set it Up\n\n1. Create a Telegram topic called \"health-tracker\" (or similar).\n2. Create a log file: `~/clawd/memory/health-log.md`\n3. Prompt OpenClaw:\n```text\nWhen I message in the \"health-tracker\" topic:\n1. Parse the message for food items and symptoms\n2. Log to ~/clawd/memory/health-log.md with timestamp\n3. Confirm what was logged\n\nSet up 3 daily reminders:\n- 8 AM: \"🍳 Log your breakfast\"\n- 1 PM: \"🥗 Log your lunch\"\n- 7 PM: \"🍽️ Log your dinner and any symptoms\"\n\nEvery Sunday, analyze the past week's log and identify patterns:\n- Which foods correlate with symptoms?\n- Are there time-of-day patterns?\n- Any clear triggers?\n\nPost the analysis to the health-tracker topic.\n```\n\n4. Optional: Add a memory file for OpenClaw to track known triggers and update it as patterns emerge.\n"},"category":"productivity"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

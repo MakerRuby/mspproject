@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Polymarket 自动驾驶：自动模拟交易 | MSP-龙虾应用案例</title>
+  <meta name="description" content="手动监控预测市场的套利机会并执行交易既耗时又需要持续关注。您希望测试和完善交易策略，而不冒真实资本的风险。" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">← <span data-zh>返回案例库</span><span data-en>Back to Cases</span></a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>金融与交易</span>
+      <span data-en>Finance & Trading</span>
+    </span>
+    <h1 class="case-title-zh">
+      <span data-zh>Polymarket 自动驾驶：自动模拟交易</span>
+      <span data-en>Polymarket Autopilot: Automated Paper Trading</span>
+    </h1>
+    <hr class="case-divider" />
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/polymarket-autopilot.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span><span data-en>View on GitHub</span> ↗
+      </a>
+    </footer>
+  </main>
+  <script>window.CASE_DATA = {"zh":{"name":"Polymarket 自动驾驶：自动模拟交易","content":"# Polymarket 自动驾驶：自动模拟交易\n\n手动监控预测市场的套利机会并执行交易既耗时又需要持续关注。您希望测试和完善交易策略，而不冒真实资本的风险。\n\n这个工作流通过自定义策略自动化 Polymarket 上的模拟交易：\n\n• 通过 API 监控市场数据（价格、成交量、价差）\n• 使用 TAIL（跟趋势）和 BONDING（逆向）策略执行模拟交易\n• 跟踪投资组合表现、盈亏和胜率\n• 向 Discord 发送包含交易日志和见解的每日总结\n• 从模式中学习：根据回测结果调整策略参数\n\n## 痛点\n\n预测市场瞬息万变。手动交易意味着错失机会、情绪化决策，以及难以追踪什么有效。用真实资金测试策略在理解市场行为之前可能造成损失。\n\n## 功能介绍\n\n自动驾驶持续扫描 Polymarket 寻找机会，使用可配置的策略模拟交易，并记录所有内容以供分析。您早上醒来会看到一份它在夜间\"交易\"了什么、什么有效、什么无效的总结。\n\n策略示例：\n- **TAIL**：在成交量激增且动量明确时跟随趋势\n- **BONDING**：当市场对新闻过度反应时买入逆向头寸\n- **SPREAD**：识别有套利潜力的错误定价市场\n\n## 所需技能\n\n- `web_search` 或 `web_fetch`（用于 Polymarket API 数据）\n- `postgres` 或 SQLite 用于交易日志和投资组合跟踪\n- Discord 集成用于每日报告\n- Cron 任务用于连续监控\n- 子代理生成用于并行市场分析\n\n## 设置步骤\n\n1. 为模拟交易设置数据库：\n```sql\nCREATE TABLE paper_trades (\n  id SERIAL PRIMARY KEY,\n  market_id TEXT,\n  market_name TEXT,\n  strategy TEXT,\n  direction TEXT,\n  entry_price DECIMAL,\n  exit_price DECIMAL,\n  quantity DECIMAL,\n  pnl DECIMAL,\n  timestamp TIMESTAMPTZ DEFAULT NOW()\n);\n\nCREATE TABLE portfolio (\n  id SERIAL PRIMARY KEY,\n  total_value DECIMAL,\n  cash DECIMAL,\n  positions JSONB,\n  updated_at TIMESTAMPTZ DEFAULT NOW()\n);\n```\n\n2. 创建一个 Discord 频道用于更新（例如 #polymarket-autopilot）。\n\n3. 提示 OpenClaw：\n```text\nYou are a Polymarket paper trading autopilot. Run continuously (via cron every 15 minutes):\n\n1. Fetch current market data from Polymarket API\n2. Analyze opportunities using these strategies:\n   - TAIL: Follow strong trends (>60% probability + volume spike)\n   - BONDING: Contrarian plays on overreactions (sudden drops >10% on news)\n   - SPREAD: Arbitrage when YES+NO > 1.05\n3. Execute paper trades in the database (starting capital: $10,000)\n4. Track portfolio state and update positions\n\nEvery morning at 8 AM, post a summary to Discord #polymarket-autopilot:\n- Yesterday's trades (entry/exit prices, P&L)\n- Current portfolio value and open positions\n- Win rate and strategy performance\n- Market insights and recommendations\n\nUse sub-agents to analyze multiple markets in parallel during high-volume periods.\n\nNever use real money. This is paper trading only.\n```\n\n4. 根据表现迭代策略。调整阈值、添加新策略、回测历史数据。\n\n## 相关链接\n\n- [Polymarket API](https://docs.polymarket.com/)\n- [模拟交易最佳实践](https://www.investopedia.com/articles/trading/11/paper-trading.asp)"},"en":{"name":"Polymarket Autopilot: Automated Paper Trading","content":"# Polymarket Autopilot: Automated Paper Trading\n\nManually monitoring prediction markets for arbitrage opportunities and executing trades is time-consuming and requires constant attention. You want to test and refine trading strategies without risking real capital.\n\nThis workflow automates paper trading on Polymarket with custom strategies:\n\n• Monitors market data via API (prices, volume, spreads)\n• Executes paper trades using TAIL (trend-following) and BONDING (contrarian) strategies\n• Tracks portfolio performance, P&L, and win rate\n• Delivers daily summaries to Discord with trade logs and insights\n• Learns from patterns: adjusts strategy parameters based on backtesting results\n\n## Pain Point\n\nPrediction markets move fast. Manual trading means missing opportunities, emotional decisions, and difficulty tracking what works. Testing strategies with real money risks losses before you understand market behavior.\n\n## What It Does\n\nThe autopilot continuously scans Polymarket for opportunities, simulates trades using configurable strategies, and logs everything for analysis. You wake up to a summary of what it \"traded\" overnight, what worked, and what didn't.\n\nExample strategies:\n- **TAIL**: Follow trends when volume spikes and momentum is clear\n- **BONDING**: Buy contrarian positions when markets overreact to news\n- **SPREAD**: Identify mispriced markets with arbitrage potential\n\n## Skills Needed\n\n- `web_search` or `web_fetch` (for Polymarket API data)\n- `postgres` or SQLite for trade logs and portfolio tracking\n- Discord integration for daily reports\n- Cron jobs for continuous monitoring\n- Sub-agent spawning for parallel market analysis\n\n## How to Set it Up\n\n1. Set up a database for paper trading:\n```sql\nCREATE TABLE paper_trades (\n  id SERIAL PRIMARY KEY,\n  market_id TEXT,\n  market_name TEXT,\n  strategy TEXT,\n  direction TEXT,\n  entry_price DECIMAL,\n  exit_price DECIMAL,\n  quantity DECIMAL,\n  pnl DECIMAL,\n  timestamp TIMESTAMPTZ DEFAULT NOW()\n);\n\nCREATE TABLE portfolio (\n  id SERIAL PRIMARY KEY,\n  total_value DECIMAL,\n  cash DECIMAL,\n  positions JSONB,\n  updated_at TIMESTAMPTZ DEFAULT NOW()\n);\n```\n\n2. Create a Discord channel for updates (e.g., #polymarket-autopilot).\n\n3. Prompt OpenClaw:\n```text\nYou are a Polymarket paper trading autopilot. Run continuously (via cron every 15 minutes):\n\n1. Fetch current market data from Polymarket API\n2. Analyze opportunities using these strategies:\n   - TAIL: Follow strong trends (>60% probability + volume spike)\n   - BONDING: Contrarian plays on overreactions (sudden drops >10% on news)\n   - SPREAD: Arbitrage when YES+NO > 1.05\n3. Execute paper trades in the database (starting capital: $10,000)\n4. Track portfolio state and update positions\n\nEvery morning at 8 AM, post a summary to Discord #polymarket-autopilot:\n- Yesterday's trades (entry/exit prices, P&L)\n- Current portfolio value and open positions\n- Win rate and strategy performance\n- Market insights and recommendations\n\nUse sub-agents to analyze multiple markets in parallel during high-volume periods.\n\nNever use real money. This is paper trading only.\n```\n\n4. Iterate on strategies based on performance. Adjust thresholds, add new strategies, backtest historical data.\n\n## Related Links\n\n- [Polymarket API](https://docs.polymarket.com/)\n- [Paper Trading Best Practices](https://www.investopedia.com/articles/trading/11/paper-trading.asp)\n"},"category":"finance"};</script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HF Papers Research Discovery | MSP-龙虾应用案例</title>
+  <meta name="description" content="跟上机器学习研究意味着每天刷新 Hugging Face Papers、浏览数十个标题、逐个点击查看摘要，以及手动交叉引用 GitHub 仓库。你想要一种对话式的方式来发现、筛选和深度阅读趋势论文，而无需离开工作区。" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">← <span data-zh>返回案例库</span><span data-en>Back to Cases</span></a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>研究与学习</span>
+      <span data-en>Research & Learning</span>
+    </span>
+    <h1 class="case-title-zh">
+      <span data-zh>HF Papers Research Discovery</span>
+      <span data-en>HF Papers Research Discovery</span>
+    </h1>
+    <hr class="case-divider" />
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/hf-papers-research-discovery.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span><span data-en>View on GitHub</span> ↗
+      </a>
+    </footer>
+  </main>
+  <script>window.CASE_DATA = {"zh":{"name":"HF Papers Research Discovery","content":"# HF Papers Research Discovery\n\n跟上机器学习研究意味着每天刷新 Hugging Face Papers、浏览数十个标题、逐个点击查看摘要，以及手动交叉引用 GitHub 仓库。你想要一种对话式的方式来发现、筛选和深度阅读趋势论文，而无需离开工作区。\n\n此工作流结合了两个技能来创建完整的研究发现管道：\n\n- 浏览 Hugging Face 上今天的趋势论文 — 按点赞数或日期排序\n- 按关键词搜索论文以找到任何主题的相关研究\n- 获取完整的论文元数据：摘要、作者、GitHub 仓库、社区点赞数、AI 生成摘要\n- 阅读任何论文上的社区讨论和评论\n- 通过 arXiv ID 深度阅读任何论文的完整 LaTeX 源代码（使用 arxiv-source）\n\n## 所需技能\n\n- [hf-papers](https://github.com/openclaw/skills/tree/main/skills/willamhou/hf-papers) 技能（4 个工具：`hf_daily_papers`、`hf_search_papers`、`hf_paper_detail`、`hf_paper_comments`）\n- [arxiv-source](https://github.com/openclaw/skills/tree/main/skills/willamhou/arxiv-source) 技能（3 个工具：`arxiv_fetch`、`arxiv_sections`、`arxiv_abstract`）— 用于获取完整论文文本\n\n无需 Docker 或身份验证 — 两个技能都使用公共 API 和本地缓存。\n\n## 安装步骤\n\n1. 安装两个技能：\n```bash\nclawhub install hf-papers\nclawhub install arxiv-source\n```\n\n2. 用你的研究工作流提示 OpenClaw：\n```text\nI want to stay on top of ML research. Here's my daily workflow:\n\n1. Every morning, show me the top 10 trending papers on Hugging Face (sorted by upvotes)\n   - For each paper, show: title, upvotes, GitHub repo (if any), and 1-line AI summary\n\n2. When I say \"search [topic]\":\n   - Search HF Papers and show the most relevant results\n   - Highlight papers with linked GitHub repos or high upvote counts\n\n3. When I pick a paper (by ID):\n   - Show the full abstract, authors, and linked resources\n   - Show community comments if any\n   - Ask if I want a deep read\n\n4. For deep reads:\n   - Fetch the full paper via arxiv-source\n   - Summarize key contributions, methodology, and results\n   - Note any linked code repos I should check out\n\nKeep a running list of papers I've reviewed today with one-line takeaways.\n```\n\n3. 试试看：\"What's trending on Hugging Face Papers today?\""},"en":{"name":"HF Papers Research Discovery","content":"# HF Papers Research Discovery\n\nKeeping up with ML research means refreshing Hugging Face Papers daily, scanning dozens of titles, clicking into each one for the abstract, and manually cross-referencing GitHub repos. You want a conversational way to discover, triage, and deep-read trending papers without leaving your workspace.\n\nThis workflow combines two skills to create a full research discovery pipeline:\n\n- Browse today's trending papers on Hugging Face — sorted by upvotes or date\n- Search papers by keyword to find relevant work on any topic\n- Get full paper metadata: abstract, authors, GitHub repos, community upvotes, AI-generated summaries\n- Read community discussion and comments on any paper\n- Deep-read the full LaTeX source of any paper via its arXiv ID (using arxiv-source)\n\n## Skills you Need\n\n- [hf-papers](https://github.com/openclaw/skills/tree/main/skills/willamhou/hf-papers) skill (4 tools: `hf_daily_papers`, `hf_search_papers`, `hf_paper_detail`, `hf_paper_comments`)\n- [arxiv-source](https://github.com/openclaw/skills/tree/main/skills/willamhou/arxiv-source) skill (3 tools: `arxiv_fetch`, `arxiv_sections`, `arxiv_abstract`) — for full paper text\n\nNo Docker or authentication required — both skills use public APIs with local caching.\n\n## How to Set it Up\n\n1. Install both skills:\n```bash\nclawhub install hf-papers\nclawhub install arxiv-source\n```\n\n2. Prompt OpenClaw with your research workflow:\n```text\nI want to stay on top of ML research. Here's my daily workflow:\n\n1. Every morning, show me the top 10 trending papers on Hugging Face (sorted by upvotes)\n   - For each paper, show: title, upvotes, GitHub repo (if any), and 1-line AI summary\n\n2. When I say \"search [topic]\":\n   - Search HF Papers and show the most relevant results\n   - Highlight papers with linked GitHub repos or high upvote counts\n\n3. When I pick a paper (by ID):\n   - Show the full abstract, authors, and linked resources\n   - Show community comments if any\n   - Ask if I want a deep read\n\n4. For deep reads:\n   - Fetch the full paper via arxiv-source\n   - Summarize key contributions, methodology, and results\n   - Note any linked code repos I should check out\n\nKeep a running list of papers I've reviewed today with one-line takeaways.\n```\n\n3. Try it: \"What's trending on Hugging Face Papers today?\"\n"},"category":"research"};</script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>X/Twitter 自动化 | MSP-龙虾应用案例</title>
+  <meta name="description" content="通过自然语言实现完整的 X/Twitter 自动化 — 发布推文、回复、点赞、转推、关注、发送私信、搜索、提取数据、运营赠送活动、监控账户，一切都可在 OpenClaw 聊天中完成。" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>社交媒体</span>
+      <span data-en>Social Media</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>X/Twitter 自动化</span>
+      <span data-en>X/Twitter Automation from Chat</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/x-twitter-automation.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"X/Twitter 自动化","content":"# X/Twitter 自动化\n\n通过自然语言实现完整的 X/Twitter 自动化 — 发布推文、回复、点赞、转推、关注、发送私信、搜索、提取数据、运营赠送活动、监控账户，一切都可在 OpenClaw 聊天中完成。\n\n## 痛点\n\n管理 X/Twitter 账户需要在应用、第三方仪表板和分析工具之间来回切换。运营赠送活动意味着手动选择获奖者。提取粉丝、点赞者或转推者需要编写爬虫脚本。没有单一界面让你以对话方式完成所有这些操作。\n\n## 功能说明\n\nTweetClaw 是一个 OpenClaw 插件，可将你的智能体连接到 X/Twitter API。你完全可以通过聊天进行交互：\n\n- **发布和互动** — 撰写推文、回复话题、点赞、转推、关注/取消关注、发送私信\n- **搜索和提取** — 搜索推文和用户、提取粉丝、点赞者、转推者、引用推文者、列表成员\n- **赠送活动** — 从推文互动中随机选择获奖者，支持可配置的筛选器（最少粉丝数、账户年龄、关键词要求）\n- **监控** — 监控账户的新推文或粉丝变化，并接收通知\n\n所有操作都通过托管 API 进行 — 无需浏览器 Cookie、无爬虫、无凭证泄露。\n\n## 示例命令\n\n**安装插件：**\n```text\nopenclaw plugins install @xquik/tweetclaw\n```\n\n**发布推文：**\n```text\nPost a tweet: \"Just shipped a new feature — try it out!\"\n```\n\n**运营赠送活动：**\n```text\nPick 3 random winners from the retweeters of this tweet: https://x.com/username/status/123456789. Exclude accounts with fewer than 50 followers.\n```\n\n**提取数据：**\n```text\nExtract all users who liked this tweet and export as CSV: https://x.com/username/status/123456789\n```\n\n**监控账户：**\n```text\nMonitor @elonmusk and notify me whenever he posts a new tweet.\n```\n\n## 所需技能\n\n- [@xquik/tweetclaw](https://www.npmjs.com/package/@xquik/tweetclaw) — 通过 `openclaw plugins install @xquik/tweetclaw` 安装\n\n## 相关链接\n\n- [GitHub 代码库](https://github.com/Xquik-dev/tweetclaw)\n- [npm 包](https://www.npmjs.com/package/@xquik/tweetclaw)"},"en":{"name":"X/Twitter Automation from Chat","content":"# X/Twitter Automation from Chat\n\nFull X/Twitter automation through natural language — post tweets, reply, like, retweet, follow, DM, search, extract data, run giveaways, and monitor accounts, all from your OpenClaw chat.\n\n## Pain Point\n\nManaging an X/Twitter presence requires jumping between the app, third-party dashboards, and analytics tools. Running giveaways means manual winner picking. Extracting followers, likers, or retweeters requires scraping scripts. There is no single interface that lets you do all of this conversationally.\n\n## What It Does\n\nTweetClaw is an OpenClaw plugin that connects your agent to the X/Twitter API. You interact entirely through chat:\n\n- **Post & engage** — Compose tweets, reply to threads, like, retweet, follow/unfollow, send DMs\n- **Search & extract** — Search tweets and users, extract followers, likers, retweeters, quote tweeters, list members\n- **Giveaways** — Pick random winners from tweet engagements with configurable filters (minimum followers, account age, keyword requirements)\n- **Monitors** — Watch accounts for new tweets or follower changes and get notified\n\nAll actions go through a managed API — no browser cookies, no scraping, no credential exposure.\n\n## Prompts\n\n**Install the plugin:**\n```text\nopenclaw plugins install @xquik/tweetclaw\n```\n\n**Post a tweet:**\n```text\nPost a tweet: \"Just shipped a new feature — try it out!\"\n```\n\n**Run a giveaway:**\n```text\nPick 3 random winners from the retweeters of this tweet: https://x.com/username/status/123456789. Exclude accounts with fewer than 50 followers.\n```\n\n**Extract data:**\n```text\nExtract all users who liked this tweet and export as CSV: https://x.com/username/status/123456789\n```\n\n**Monitor an account:**\n```text\nMonitor @elonmusk and notify me whenever he posts a new tweet.\n```\n\n## Skills Needed\n\n- [@xquik/tweetclaw](https://www.npmjs.com/package/@xquik/tweetclaw) — Install via `openclaw plugins install @xquik/tweetclaw`\n\n## Related Links\n\n- [GitHub Repository](https://github.com/Xquik-dev/tweetclaw)\n- [npm Package](https://www.npmjs.com/package/@xquik/tweetclaw)\n"},"category":"social-media"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

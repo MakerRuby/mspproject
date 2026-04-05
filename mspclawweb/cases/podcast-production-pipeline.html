@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>播客制作流程 | MSP-龙虾应用案例</title>
+  <meta name="description" content="你有播客的想法，也许还有一大堆待选的剧集主题。但在研究嘉宾、撰写大纲、起草开场白、生成节目笔记和撰写社交媒体推广帖子之间，制作开销会扼杀你的制作动力。如果你只需提供一个话题，就能得到一整套制作就绪的资产包，会怎样？" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>创意与构建</span>
+      <span data-en>Creative & Building</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>播客制作流程</span>
+      <span data-en>Podcast Production Pipeline</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/podcast-production-pipeline.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"播客制作流程","content":"# 播客制作流程\n\n你有播客的想法，也许还有一大堆待选的剧集主题。但在研究嘉宾、撰写大纲、起草开场白、生成节目笔记和撰写社交媒体推广帖子之间，制作开销会扼杀你的制作动力。如果你只需提供一个话题，就能得到一整套制作就绪的资产包，会怎样？\n\n这个用例将多个智能体链接在一起，处理从话题到发布就绪的整个播客制作工作流程。\n\n## 痛点\n\n独立播客制作者和小型团队花在制作上的时间比实际录制的时间还多。研究需要数小时，节目笔记被视为事后补充，社交媒体推广往往是首先被跳过的环节。真正的创意部分——谈话——可能只占总工作量的30%。这个智能体负责处理其他70%。\n\n## 功能\n\n- **剧集研究** — 给定一个话题或嘉宾名字，编纂背景研究、讨论要点和建议提问\n- **大纲与脚本** — 生成结构化的剧集大纲，包含开场脚本、段落过渡和结尾陈辞\n- **节目笔记** — 录制后，将文字稿处理成带时间戳的节目笔记，并包含提及内容的链接\n- **社交媒体套件** — 为 X、LinkedIn 和 Instagram 创建宣传帖子，展示剧集亮点和精彩引语\n- **剧集描述** — 为 Spotify、Apple Podcasts 和 YouTube 撰写 SEO 优化的剧集描述\n\n## 所需技能\n\n- 网络搜索/研究技能（用于嘉宾研究和话题深入研究）\n- 文件系统访问（用于读取文字稿和写入输出文件）\n- Slack、Discord 或 Telegram 集成（用于交付资产）\n- 可选：`sessions_spawn` 用于并行运行研究和写作智能体\n- 可选：RSS 源技能（用于监控竞争对手的播客）\n\n## 设置方法\n\n1. 录制前 — 生成研究和大纲：\n```text\nI'm recording a podcast episode about [TOPIC]. My guest is [NAME].\n\nPlease:\n1. Research the guest — their background, recent work, hot takes, and\n   anything controversial or interesting they've said publicly.\n2. Research the topic — key trends, recent news, common misconceptions,\n   and what the audience likely already knows vs. what would surprise them.\n3. Generate an episode outline:\n   - Cold open hook (1-2 sentences to grab attention)\n   - Intro script (30 seconds, casual tone)\n   - 5-7 interview questions, ordered from easy/rapport-building to deep/provocative\n   - 2-3 \"back pocket\" questions in case the conversation stalls\n   - Closing segment with call-to-action\n\nSave everything to ~/podcast/episodes/[episode-number]/prep/\n```\n\n2. 录制后 — 生成节目笔记和推广内容：\n```text\nHere's the transcript for Episode [NUMBER]: [paste or point to file]\n\nPlease:\n1. Write timestamped show notes — every major topic shift gets a timestamp\n   and one-line summary. Include links to anything mentioned (tools, books,\n   articles, people).\n2. Write an episode description (max 200 words) optimized for podcast\n   search. Include 3-5 relevant keywords naturally.\n3. Create social media posts:\n   - X/Twitter: 3 tweets — one pull quote, one key insight, one question\n     to spark discussion. Each under 280 chars.\n   - LinkedIn: 1 post, professional tone, 100-150 words.\n   - Instagram caption: 1 post with emoji, casual tone, include relevant hashtags.\n4. Extract a \"highlights\" list — the 3 most interesting/surprising moments\n   with timestamps.\n\nSave everything to ~/podcast/episodes/[episode-number]/publish/\n```\n\n3. 可选 — 竞争对手监控：\n```text\nMonitor these podcast RSS feeds daily:\n- [feed URL 1]\n- [feed URL 2]\n\nWhen a new episode drops that covers a topic relevant to my podcast,\nsend me a Telegram message with:\n- Episode title and link\n- One-sentence summary\n- Whether this is something I should respond to or cover from my angle\n```\n\n## 关键洞察\n\n- **录制前研究**是价值最大的地方。带着深入的嘉宾研究走进访谈会使对话效果显著提升——这是后期制作无法弥补的。\n- 带时间戳的节目笔记是一个巨大的听众留存工具。大多数播客制作者跳过它们是因为工作量太大。这个智能体使其变得轻而易举。\n- 社交媒体套件节省了最多的*重复性*时间。每个剧集都需要推广，而结构总是一样的——这是自动化的完美场景。\n- 与[多智能体内容工厂](content-factory.md)搭配效果很好，如果你想将播客内容改编成博客文章、通讯或视频片段。\n\n## 相关链接\n\n- [播客 RSS 源规范](https://podcasters.apple.com/support/823-podcast-requirements)\n- [Spotify for Podcasters](https://podcasters.spotify.com/)\n- [Whisper (OpenAI)](https://github.com/openai/whisper) — 用于本地文字稿生成"},"en":{"name":"Podcast Production Pipeline","content":"# Podcast Production Pipeline\n\nYou have a podcast idea, maybe even a backlog of episode topics. But between researching guests, writing outlines, drafting intros, generating show notes, and writing social media posts for promotion — the production overhead kills your momentum. What if you handed off a topic and got back a full production package?\n\nThis use case chains agents together to handle the entire podcast production workflow from topic to publish-ready assets.\n\n## Pain Point\n\nSolo podcasters and small teams spend more time on production than on actually recording. Research takes hours, show notes are an afterthought, and social media promotion is the first thing that gets skipped. The creative part — the conversation — is maybe 30% of the total effort. This agent handles the other 70%.\n\n## What It Does\n\n- **Episode Research** — given a topic or guest name, compiles background research, talking points, and suggested questions\n- **Outline & Script** — generates a structured episode outline with intro script, segment transitions, and closing remarks\n- **Show Notes** — after recording, processes the transcript into timestamped show notes with links to everything mentioned\n- **Social Media Kit** — creates promotional posts for X, LinkedIn, and Instagram with episode highlights and pull quotes\n- **Episode Description** — writes SEO-optimized episode descriptions for Spotify, Apple Podcasts, and YouTube\n\n## Skills You Need\n\n- Web search / research skill (for guest research and topic deep-dives)\n- File system access (for reading transcripts and writing output files)\n- Slack, Discord, or Telegram integration (for delivering assets)\n- Optional: `sessions_spawn` for running research and writing agents in parallel\n- Optional: RSS feed skill (for monitoring competitor podcasts)\n\n## How to Set It Up\n\n1. Pre-recording — generate research and outline:\n```text\nI'm recording a podcast episode about [TOPIC]. My guest is [NAME].\n\nPlease:\n1. Research the guest — their background, recent work, hot takes, and\n   anything controversial or interesting they've said publicly.\n2. Research the topic — key trends, recent news, common misconceptions,\n   and what the audience likely already knows vs. what would surprise them.\n3. Generate an episode outline:\n   - Cold open hook (1-2 sentences to grab attention)\n   - Intro script (30 seconds, casual tone)\n   - 5-7 interview questions, ordered from easy/rapport-building to deep/provocative\n   - 2-3 \"back pocket\" questions in case the conversation stalls\n   - Closing segment with call-to-action\n\nSave everything to ~/podcast/episodes/[episode-number]/prep/\n```\n\n2. Post-recording — generate show notes and promo:\n```text\nHere's the transcript for Episode [NUMBER]: [paste or point to file]\n\nPlease:\n1. Write timestamped show notes — every major topic shift gets a timestamp\n   and one-line summary. Include links to anything mentioned (tools, books,\n   articles, people).\n2. Write an episode description (max 200 words) optimized for podcast\n   search. Include 3-5 relevant keywords naturally.\n3. Create social media posts:\n   - X/Twitter: 3 tweets — one pull quote, one key insight, one question\n     to spark discussion. Each under 280 chars.\n   - LinkedIn: 1 post, professional tone, 100-150 words.\n   - Instagram caption: 1 post with emoji, casual tone, include relevant hashtags.\n4. Extract a \"highlights\" list — the 3 most interesting/surprising moments\n   with timestamps.\n\nSave everything to ~/podcast/episodes/[episode-number]/publish/\n```\n\n3. Optional — competitor monitoring:\n```text\nMonitor these podcast RSS feeds daily:\n- [feed URL 1]\n- [feed URL 2]\n\nWhen a new episode drops that covers a topic relevant to my podcast,\nsend me a Telegram message with:\n- Episode title and link\n- One-sentence summary\n- Whether this is something I should respond to or cover from my angle\n```\n\n## Key Insights\n\n- The **pre-recording research** is where most value is. Walking into an interview with deep guest research makes the conversation dramatically better — and that's something you can't fake in post-production.\n- Show notes with timestamps are a huge listener retention tool. Most podcasters skip them because they're tedious. This agent makes them effortless.\n- The social media kit saves the most *recurring* time. You need promo for every single episode, and it's always the same structure — perfect for automation.\n- Pairs well with the [Multi-Agent Content Factory](content-factory.md) if you want to repurpose podcast content into blog posts, newsletters, or video clips.\n\n## Related Links\n\n- [Podcast RSS Feed Spec](https://podcasters.apple.com/support/823-podcast-requirements)\n- [Spotify for Podcasters](https://podcasters.spotify.com/)\n- [Whisper (OpenAI)](https://github.com/openai/whisper) — for local transcript generation\n"},"category":"creative"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

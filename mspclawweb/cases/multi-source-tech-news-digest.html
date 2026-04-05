@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>多源科技新闻摘要 | MSP-龙虾应用案例</title>
+  <meta name="description" content="从 RSS、Twitter/X、GitHub 发布和网络搜索等 109+ 个来源自动聚合、评分和推送科技新闻——一切都通过自然语言管理。" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>社交媒体</span>
+      <span data-en>Social Media</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>多源科技新闻摘要</span>
+      <span data-en>Multi-Source Tech News Digest</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/multi-source-tech-news-digest.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"多源科技新闻摘要","content":"# 多源科技新闻摘要\n\n从 RSS、Twitter/X、GitHub 发布和网络搜索等 109+ 个来源自动聚合、评分和推送科技新闻——一切都通过自然语言管理。\n\n## 痛点\n\n要了解 AI、开源和前沿科技的最新动态，需要每天检查数十个 RSS 订阅源、Twitter 账户、GitHub 仓库和新闻网站。手工策展既耗时，而且大多数现有工具要么缺乏质量过滤，要么需要复杂的配置。\n\n## 功能介绍\n\n一个按计划运行的四层数据管道：\n\n1. **RSS 订阅源**（46 个来源）— OpenAI、Hacker News、MIT Tech Review 等\n2. **Twitter/X 意见领袖**（44 个账户）— @karpathy、@sama、@VitalikButerin 等\n3. **GitHub 发布**（19 个仓库）— vLLM、LangChain、Ollama、Dify 等\n4. **网络搜索**（4 个主题搜索）— 通过 Brave Search API\n\n所有文章经过合并和标题相似度去重，然后按质量评分（优先来源 +3、多源出现 +5、时效性 +2、参与度 +1）排序。最终摘要会推送到 Discord、电子邮件或 Telegram。\n\n该框架完全可定制——在 30 秒内添加自己的 RSS 订阅源、Twitter 账户、GitHub 仓库或搜索查询。\n\n## 提示词\n\n**安装并设置每日摘要：**\n```text\nInstall tech-news-digest from ClawHub. Set up a daily tech digest at 9am to Discord #tech-news channel. Also send it to my email at myemail@example.com.\n```\n\n**添加自定义来源：**\n```text\nAdd these to my tech digest sources:\n- RSS: https://my-company-blog.com/feed\n- Twitter: @myFavResearcher\n- GitHub: my-org/my-framework\n```\n\n**按需生成：**\n```text\nGenerate a tech digest for the past 24 hours and send it here.\n```\n\n## 所需技能\n\n- [tech-news-digest](https://clawhub.ai/skills/tech-news-digest) — 通过 `clawhub install tech-news-digest` 安装\n- [gog](https://clawhub.ai/skills/gog)（可选）— 用于通过 Gmail 发送电子邮件\n\n## 环境变量（可选）\n\n- `X_BEARER_TOKEN` — Twitter/X API 令牌，用于 KOL 监控\n- `BRAVE_API_KEY` — Brave Search API 密钥，用于网络搜索层\n- `GITHUB_TOKEN` — GitHub 令牌，用于更高的 API 速率限制\n\n## 相关链接\n\n- [GitHub 仓库](https://github.com/draco-agent/tech-news-digest)\n- [ClawHub 页面](https://clawhub.ai/skills/tech-news-digest)"},"en":{"name":"Multi-Source Tech News Digest","content":"# Multi-Source Tech News Digest\n\nAutomatically aggregate, score, and deliver tech news from 109+ sources across RSS, Twitter/X, GitHub releases, and web search — all managed through natural language.\n\n## Pain Point\n\nStaying updated across AI, open-source, and frontier tech requires checking dozens of RSS feeds, Twitter accounts, GitHub repos, and news sites daily. Manual curation is time-consuming, and most existing tools either lack quality filtering or require complex configuration.\n\n## What It Does\n\nA four-layer data pipeline that runs on a schedule:\n\n1. **RSS Feeds** (46 sources) — OpenAI, Hacker News, MIT Tech Review, etc.\n2. **Twitter/X KOLs** (44 accounts) — @karpathy, @sama, @VitalikButerin, etc.\n3. **GitHub Releases** (19 repos) — vLLM, LangChain, Ollama, Dify, etc.\n4. **Web Search** (4 topic searches) — via Brave Search API\n\nAll articles are merged, deduplicated by title similarity, and quality-scored (priority source +3, multi-source +5, recency +2, engagement +1). The final digest is delivered to Discord, email, or Telegram.\n\nThe framework is fully customizable — add your own RSS feeds, Twitter handles, GitHub repos, or search queries in 30 seconds.\n\n## Prompts\n\n**Install and set up daily digest:**\n```text\nInstall tech-news-digest from ClawHub. Set up a daily tech digest at 9am to Discord #tech-news channel. Also send it to my email at myemail@example.com.\n```\n\n**Add custom sources:**\n```text\nAdd these to my tech digest sources:\n- RSS: https://my-company-blog.com/feed\n- Twitter: @myFavResearcher\n- GitHub: my-org/my-framework\n```\n\n**Generate on demand:**\n```text\nGenerate a tech digest for the past 24 hours and send it here.\n```\n\n## Skills Needed\n\n- [tech-news-digest](https://clawhub.ai/skills/tech-news-digest) — Install via `clawhub install tech-news-digest`\n- [gog](https://clawhub.ai/skills/gog) (optional) — For email delivery via Gmail\n\n## Environment Variables (Optional)\n\n- `X_BEARER_TOKEN` — Twitter/X API bearer token for KOL monitoring\n- `BRAVE_API_KEY` — Brave Search API key for web search layer\n- `GITHUB_TOKEN` — GitHub token for higher API rate limits\n\n## Related Links\n\n- [GitHub Repository](https://github.com/draco-agent/tech-news-digest)\n- [ClawHub Page](https://clawhub.ai/skills/tech-news-digest)\n"},"category":"social-media"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

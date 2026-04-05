@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YouTube 内容管道 | MSP-龙虾应用案例</title>
+  <meta name="description" content="作为一名日常 YouTube 创作者，在网络和 X/Twitter 上寻找新鲜、及时的视频创意非常耗时。跟踪你已经制作过的内容可以防止重复，并帮助你走在趋势的前面。" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>创意与构建</span>
+      <span data-en>Creative & Building</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>YouTube 内容管道</span>
+      <span data-en>YouTube Content Pipeline</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/youtube-content-pipeline.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"YouTube 内容管道","content":"# YouTube 内容管道\n\n作为一名日常 YouTube 创作者，在网络和 X/Twitter 上寻找新鲜、及时的视频创意非常耗时。跟踪你已经制作过的内容可以防止重复，并帮助你走在趋势的前面。\n\n这个工作流自动化了整个内容侦察和研究管道：\n\n• 每小时定时任务扫描突发 AI 新闻（网络 + X/Twitter）并将视频创意推送到 Telegram\n• 维护一个 90 天的视频目录，包含浏览次数和主题分析，以避免重复覆盖话题\n• 在 SQLite 数据库中存储所有推荐，使用向量嵌入进行语义去重（这样你永远不会被推荐同一个创意两次）\n• 当你在 Slack 中分享链接时，OpenClaw 研究该话题、搜索 X 上的相关帖子、查询你的知识库，并创建一张包含完整大纲的 Asana 卡片\n\n## 所需技能\n\n- `web_search`（内置）\n- [x-research-v2](https://clawhub.ai) 或自定义 X/Twitter 搜索技能\n- [knowledge-base](https://clawhub.ai) 技能用于 RAG\n- Asana 集成（或 Todoist）\n- `gog` CLI 用于 YouTube 分析\n- 用于接收推荐的 Telegram 主题\n\n## 设置步骤\n\n1. 为视频创意设置一个 Telegram 主题，并在 OpenClaw 中配置它。\n2. 安装知识库技能和 x-research 技能。\n3. 创建一个 SQLite 数据库用于推荐跟踪：\n```sql\nCREATE TABLE pitches (\n  id INTEGER PRIMARY KEY,\n  timestamp TEXT,\n  topic TEXT,\n  embedding BLOB,\n  sources TEXT\n);\n```\n4. 向 OpenClaw 输入提示：\n```text\n运行每小时定时任务来：\n1. 搜索网络和 X/Twitter 上的突发 AI 新闻\n2. 与我的 90 天 YouTube 目录进行对比（通过 gog 从 YouTube 分析中获取）\n3. 针对数据库中的所有历史推荐检查语义相似性\n4. 如果是新创意，将其推荐到我的 Telegram\"视频创意\"主题中，附带来源信息\n\n另外：当我在 Slack #ai_trends 频道分享链接时，自动：\n1. 研究该话题\n2. 搜索 X 上的相关帖子\n3. 查询我的知识库\n4. 在视频管道中创建一张 Asana 卡片，附带完整大纲\n```"},"en":{"name":"YouTube Content Pipeline","content":"# YouTube Content Pipeline\n\nAs a daily YouTube creator, finding fresh, timely video ideas across the web and X/Twitter is time-consuming. Tracking what you've already covered prevents duplicates and helps you stay ahead of trends.\n\nThis workflow automates the entire content scouting and research pipeline:\n\n• Hourly cron job scans breaking AI news (web + X/Twitter) and pitches video ideas to Telegram\n• Maintains a 90-day video catalog with view counts and topic analysis to avoid re-covering topics\n• Stores all pitches in a SQLite database with vector embeddings for semantic dedup (so you never get pitched the same idea twice)\n• When you share a link in Slack, OpenClaw researches the topic, searches X for related posts, queries your knowledge base, and creates an Asana card with a full outline\n\n## Skills you Need\n\n- `web_search` (built-in)\n- [x-research-v2](https://clawhub.ai) or custom X/Twitter search skill\n- [knowledge-base](https://clawhub.ai) skill for RAG\n- Asana integration (or Todoist)\n- `gog` CLI for YouTube Analytics\n- Telegram topic for receiving pitches\n\n## How to Set it Up\n\n1. Set up a Telegram topic for video ideas and configure it in OpenClaw.\n2. Install the knowledge-base skill and x-research skill.\n3. Create a SQLite database for pitch tracking:\n```sql\nCREATE TABLE pitches (\n  id INTEGER PRIMARY KEY,\n  timestamp TEXT,\n  topic TEXT,\n  embedding BLOB,\n  sources TEXT\n);\n```\n4. Prompt OpenClaw:\n```text\nRun an hourly cron job to:\n1. Search web and X/Twitter for breaking AI news\n2. Check against my 90-day YouTube catalog (fetch from YouTube Analytics via gog)\n3. Check semantic similarity against all past pitches in the database\n4. If novel, pitch the idea to my Telegram \"video ideas\" topic with sources\n\nAlso: when I share a link in Slack #ai_trends, automatically:\n1. Research the topic\n2. Search X for related posts\n3. Query my knowledge base\n4. Create an Asana card in Video Pipeline with a full outline\n```\n"},"category":"creative"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

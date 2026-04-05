@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>自主教育游戏开发管道 | MSP-龙虾应用案例</title>
+  <meta name="description" content="起源故事： 一位&quot;老派的网吧爱好者&quot;父亲想为他的女儿 Susana（3岁）和 Julieta（即将出生）创建一个安全、无广告、高质量的游戏门户网站。现有网站充斥着垃圾信息、侵入性广告和欺骗性按钮（黑暗模式），令他的幼儿感到沮丧。" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>创意与构建</span>
+      <span data-en>Creative & Building</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>自主教育游戏开发管道</span>
+      <span data-en>Autonomous Educational Game Development Pipeline</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/autonomous-game-dev-pipeline.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"自主教育游戏开发管道","content":"# 自主教育游戏开发管道\n\n## 痛点\n**起源故事：** 一位\"老派的网吧爱好者\"父亲想为他的女儿 Susana（3岁）和 Julieta（即将出生）创建一个安全、无广告、高质量的游戏门户网站。现有网站充斥着垃圾信息、侵入性广告和欺骗性按钮（黑暗模式），令他的幼儿感到沮丧。\n\n**挑战：** 建立一个\"干净、快速、简洁\"的门户网站是容易的部分。真正的挑战是填充 **40+ 个教育游戏**，这些游戏针对特定发展阶段（0-15 岁）量身定制，而没有一个开发团队。手动开发对于一个独立的父亲开发者来说太慢了，而维护几十个游戏之间的一致性正在变成一场噩梦。\n\n## 功能说明\n此用例定义了一个\"游戏开发者代理\"，可以自主管理游戏创建和维护的整个生命周期。该工作流程执行 **\"错误优先\"** 政策，其中代理必须在实现新功能之前检查并解决已报告的错误。\n\n**效率：** 此管道能够每 7 分钟生成 **1 个新游戏或错误修复**。代理会不知疲倦地迭代遍历 41+ 个计划游戏的待办项，在创建新内容和纠正前面周期中检测到的问题之间交替进行。\n\n当路径畅通时，代理会：\n1.  **选择**：根据\"轮询\"策略从队列（`development-queue.md`）中识别下一个游戏，以平衡不同年龄组的内容。\n2.  **实现**：为游戏编写 HTML5/CSS3/JS 代码，严格遵循 `game-design-rules.md`（无框架、移动优先、离线可用）。\n3.  **注册**：自动将游戏元数据添加到中央注册表（`games-list.json`）。\n4.  **文档化**：更新 `CHANGELOG.md` 和 `master-game-plan.md` 状态。\n5.  **部署**：处理 Git 工作流程：获取主分支、创建功能分支、使用常规提交消息提交变更并合并回主分支。\n\n## 提示词\n\n此工作流程的核心是给代理的 **系统指令**。此提示词将大语言模型转变为尊重项目严格结构的纪律开发者。\n\n*(**注：** 生产环境中使用的实际提示词采用 **西班牙语**（`es-419`），以符合项目的目标受众（拉丁美洲儿童）和该地区潜在的未来贡献者。以下版本是为本文档翻译的。)*\n\n```text\n充当网页游戏开发和儿童用户体验专家。\n你的目标是开发生产队列中的下一款游戏。\n\n开始之前，请阅读并分析以下上下文文件：\n\n1.  错误上下文（最高优先级 - 严重）：\n    @[bugs/]\n    （检查此文件夹。如果有文件，你的任务是修复 **第一个文件**（按字母顺序）。暂时忽略其余的错误和游戏队列）。\n\n2.  队列上下文（下一款游戏）：\n    @[development-queue.md]\n    （识别\"下一款游戏\"部分中标记为 [NEXT] 的游戏。仅当没有错误时）。\n\n3.  设计规则（技术标准）：\n    @[game-design-rules.md]\n    （严格遵循这些规则：纯 HTML/CSS/JS、文件夹结构、移动响应式）\n\n4.  游戏规范（机制和资源）：\n    （根据游戏 ID 在 games-backlog/ 中识别相应的文件）\n\n5.  中央注册表（集成）：\n    @[public/js/games-list.json]\n    （你必须注册新游戏的文件，以便它出现在主页上）\n\n任务：\n0. **错误优先！**：如果 `bugs/` 文件夹有内容，你的唯一优先事项是修复 **按字母顺序排列的第一个错误**。创建一个 `fix/...` 分支，解决 **该** 错误，更新状态并合并。**不要尝试一次修复多个错误。**\n   - 如果没有错误，继续下一款游戏：\n\n1. **同步**：`git fetch && git pull origin master`（严重）。\n2. 创建新分支：`git checkout -b feature/[game-id]`。\n3. 在 'public/games/[game-id]/' 中创建文件夹和文件。\n4. 根据待办项和设计规则实现逻辑和设计。\n5. 在 'games-list.json' 中注册游戏（严重）。\n6. 完成后：\n    - 更新 `CHANGELOG.md` 并提升版本号。\n    - 更新 `master-game-plan.md` 和 `development-queue.md`。\n    - 文档化变更：`git commit -m \"feat: add [game-id]\"`。\n7. **交付**：\n    - 推送：`git push origin feature/[game-id]`。\n    - 请求合并到主分支。\n    - 合并到主分支后，推送更改（`git push origin master`）。\n```\n\n## 所需技能\n-   **Git**：用于管理分支、提交和合并。\n  \n## 相关链接\n-   [项目起源故事（LinkedIn）](https://www.linkedin.com/feed/update/urn:li:activity:7429739200301772800/) - 配置 OpenClaw 后此项目的产生方式。\n-   [El Bebe Games 代码库](https://github.com/duberblockito/elbebe/tree/master) - 源代码。\n-   [El Bebe Games 在线网站](https://elbebe.co/) - 此管道的结果。\n-   [HTML5 游戏开发最佳实践](https://developer.mozilla.org/en-US/docs/Games)"},"en":{"name":"Autonomous Educational Game Development Pipeline","content":"# Autonomous Educational Game Development Pipeline\n\n## Pain Point\n**The Origin Story:** A \"LANero of the old school\" dad wanted to create a safe, ad-free, and high-quality gaming portal for his daughters, Susana (3) and Julieta (coming soon). Existing sites were plagued with spam, aggressive ads, and deceptive buttons (dark patterns) that frustrated his toddler.\n\n**The Challenge:** Building a \"clean, fast, and simple\" portal was the easy part. The real challenge was populating it with **40+ educational games** tailored to specific developmental stages (0-15 years) without a team of developers. Manual development was too slow for a solo parent-developer, and maintaining consistency across dozens of games was becoming a nightmare.\n\n## What It Does\nThis use case defines a \"Game Developer Agent\" that autonomously manages the entire lifecycle of a game's creation and maintenance. The workflow enforces a **\"Bugs First\"** policy where the agent must check for and resolve reported bugs before implementing new features.\n\n**Efficiency:** This pipeline is capable of producing **1 new game or bugfix every 7 minutes**. The agent tirelessly iterates through the backlog of 41+ planned games, alternating between creating new content and correcting issues detected in previous cycles.\n\nWhen the path is clear, the agent:\n1.  **Selects**: Identifies the next game from a queue (`development-queue.md`) based on a \"Round Robin\" strategy to balance content across age groups.\n2.  **Implements**: Writes HTML5/CSS3/JS code for the game, following strict `game-design-rules.md` (no frameworks, mobile-first, offline-capable).\n3.  **Registers**: Automatically adds the game metadata to the central registry (`games-list.json`).\n4.  **Documents**: Updates the `CHANGELOG.md` and `master-game-plan.md` status.\n5.  **Deploys**: Handles the Git workflow: fetching master, creating a feature branch, committing changes with conventional commits, and merging back.\n\n## Prompts\n\nThe core of this workflow is the **System Instructions** given to the agent. This prompt turns the LLM into a disciplined developer that respects the project's rigid structure.\n\n*(**Note:** The actual prompts used in production are in **Spanish** (`es-419`) to align with the project's target audience (Latin American children) and potential future contributors from the region. The version below is translated for this documentation.)*\n\n```text\nAct as an Expert in Web Game Development and Child UX.\nYour goal is to develop the next game in the production queue.\n\nPlease read and analyze the following context files before starting:\n\n1.  BUG CONTEXT (Top Priority - CRITICAL):\n    @[bugs/]\n    (Check this folder. If there are files, YOUR TASK IS TO FIX **ONLY THE FIRST FILE** (in alphabetical order). Ignore the rest of the bugs and the game queue for now).\n\n2.  QUEUE CONTEXT (Which game is next):\n    @[development-queue.md]\n    (Identify the game marked as [NEXT] in the \"Next Games\" section. ONLY if there are no bugs).\n\n3.  DESIGN RULES (Technical Standards):\n    @[game-design-rules.md]\n    (Strictly follow these rules: Pure HTML/CSS/JS, folder structure, mobile responsiveness)\n\n4.  GAME SPECIFICATIONS (Mechanics and Assets):\n    (Identify the corresponding file in games-backlog/ based on the game ID)\n\n5.  CENTRAL REGISTRY (Integration):\n    @[public/js/games-list.json]\n    (File where you MUST register the new game so it appears on the home page)\n\nTASK:\n0. **BUGS FIRST!**: If the `bugs/` folder has content, your only priority is to fix **the first bug in alphabetical order**. Create a `fix/...` branch, resolve **that** bug, update status, and merge. **Do not attempt to fix multiple bugs at once.**\n   - IF THERE ARE NO BUGS, proceed with the next game:\n\n1. **Synchronization**: `git fetch && git pull origin master` (CRITICAL).\n2. Create a new branch: `git checkout -b feature/[game-id]`.\n3. Create the folder and files in 'public/games/[game-id]/'.\n4. Implement logic and design according to the backlog and design rules.\n5. Register the game in 'games-list.json' (CRITICAL).\n6. When finished:\n    - Update `CHANGELOG.md` bumping the version.\n    - Update `master-game-plan.md` and `development-queue.md`.\n    - Document changes: `git commit -m \"feat: add [game-id]\"`.\n7. **Delivery**:\n    - Push: `git push origin feature/[game-id]`.\n    - Request merge to master.\n    - Once in master, push changes (`git push origin master`).\n```\n\n## Skills Needed\n-   **Git**: To manage branches, commits, and merges.\n  \n## Related Links\n-   [Project Origin Story (LinkedIn)](https://www.linkedin.com/feed/update/urn:li:activity:7429739200301772800/) - How this project emerged after configuring OpenClaw.\n-   [El Bebe Games Repository](https://github.com/duberblockito/elbebe/tree/master) - Source code.\n-   [El Bebe Games Live Site](https://elbebe.co/) - The result of this pipeline.\n-   [HTML5 Game Development Best Practices](https://developer.mozilla.org/en-US/docs/Games)\n"},"category":"creative"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

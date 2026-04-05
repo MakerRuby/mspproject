@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenClaw 作为桌面 Cowork（AionUi）— 远程救援与多智能体中 | MSP-龙虾应用案例</title>
+  <meta name="description" content="从桌面 Cowork UI 使用 OpenClaw，在外出时通过 Telegram 或 WebUI 访问，当无法连接时进行远程修复。AionUi 是一款免费开源应用，将 OpenClaw 作为一流智能体与 12+ 其他智能体（Claude " />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>生产力工具</span>
+      <span data-en>Productivity</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>OpenClaw 作为桌面 Cowork（AionUi）— 远程救援与多智能体中</span>
+      <span data-en>OpenClaw as Desktop Cowork (AionUi) — Remote Rescue & Multi-</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/aionui-cowork-desktop.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"OpenClaw 作为桌面 Cowork（AionUi）— 远程救援与多智能体中","content":"# OpenClaw 作为桌面 Cowork（AionUi）— 远程救援与多智能体中枢\n\n从桌面 Cowork UI 使用 OpenClaw，在外出时通过 Telegram 或 WebUI 访问，当无法连接时进行远程修复。AionUi 是一款免费开源应用，将 **OpenClaw 作为一流智能体**与 12+ 其他智能体（Claude Code、Codex、Qwen Code 等）并行运行，内置 **OpenClaw 部署专家**用于安装、诊断和修复 — 包括当 OpenClaw 宕机且你不在机器旁时的 **远程救援**。\n\n## 为什么选择 OpenClaw + AionUi\n\n| 如果你需要… | AionUi 提供… |\n|---------------|--------------------|\n| **使用真正的桌面 UI 运行 OpenClaw** | Cowork 工作区，你可以看到 OpenClaw（和其他智能体）读/写文件、运行命令、浏览网页 — 不仅仅是终端/聊天。 |\n| **在远程修复已损坏的 OpenClaw** | 从任何地方通过 **Telegram 或 WebUI** 打开 AionUi → 使用 **OpenClaw 部署专家**运行 `openclaw doctor`、修复配置、重启网关。许多用户依赖此功能。 |\n| **在一个地方使用 OpenClaw 和其他智能体** | OpenClaw、内置智能体、Claude Code、Codex 等在一个应用中；可以切换或并行运行，所有智能体共用相同的 MCP 配置。 |\n| **远程访问你的 OpenClaw** | WebUI、Telegram、Lark、DingTalk — 从手机或其他设备与同一个 AionUi 实例（因此也是 OpenClaw）通信。 |\n\n## 痛点\n\n你已经从 CLI 或 Telegram 使用 OpenClaw，但是：\n\n- 你想要 **看到**智能体在做什么（文件、终端、网页）而不是从日志推断。\n- 当 **OpenClaw 无法连接**且你不在机器旁时，你无法运行 `openclaw doctor` 或修复配置 — 你需要远程访问某个能修复 OpenClaw 的工具。\n- 你使用多个 CLI 智能体（OpenClaw、Claude Code、Codex 等），不想在应用之间切换或为每个智能体重新配置 MCP。\n\n## 功能说明\n\n- **OpenClaw 作为 Cowork 智能体**：安装 AionUi 和 OpenClaw；AionUi 自动检测 OpenClaw。从同一个 Cowork UI 使用 OpenClaw — 文件感知工作区，可见的操作。\n- **远程 OpenClaw 救援**：当 OpenClaw 损坏或无法访问时，通过 **Telegram 或 WebUI** 打开 AionUi，使用内置的 **OpenClaw 部署专家**。它帮助安装、运行 `openclaw doctor`、修复配置、重启网关，并引导你完成恢复过程。对于在无头环境或其他机器上运行 OpenClaw 的用户来说是常见做法。\n- **在一个应用中使用多个智能体**：将 OpenClaw 与内置智能体（Gemini/OpenAI/Anthropic/Ollama）、Claude Code、Codex 和 12+ 其他智能体并行运行 — 一个界面、并行会话。\n- **MCP 一次配置，所有智能体通用**：在 AionUi 中配置 MCP 服务器一次；它们会同步到 OpenClaw 和所有其他智能体 — 无需针对每个智能体单独设置 MCP。\n- **远程访问**：使用 WebUI、Telegram、Lark 或 DingTalk 从任何地方访问你的 AionUi 实例（以及 OpenClaw）。\n- **可选的自动化**：AionUi cron 可以按计划运行 OpenClaw（或其他智能体）以实现 24/7 任务。\n\n## 所需技能\n\n- **OpenClaw**（例如 `npm install -g openclaw@latest`）。AionUi 的 **OpenClaw 设置**助手可以指导安装、网关和配置。\n- API 密钥或模型认证（OpenClaw 配置 + AionUi 中任何内置智能体的密钥）。\n\n## 设置步骤\n\n1. **安装 AionUi**：[AionUi 发布版本](https://github.com/iOfficeAI/AionUi/releases)（macOS / Windows / Linux）。\n2. **安装 OpenClaw**（如需要）：\n   ```bash\n   npm install -g openclaw@latest\n   openclaw onboard --install-daemon   # 可选：守护进程用于 24/7 运行\n   ```\n3. **打开 AionUi**��它会自动检测 OpenClaw。如果未检测到，请使用应用内的 **OpenClaw 设置**助手。\n4. **创建 Cowork 会话**并选择 OpenClaw。同一工作区、MCP 和（如启用）远程通道。\n\n对于远程访问或 cron，请在 AionUi 设置中配置通道和自动化。\n\n## 相关链接\n\n- [AionUi GitHub](https://github.com/iOfficeAI/AionUi)\n- [AionUi 官网](https://www.aionui.com)\n- [OpenClaw GitHub](https://github.com/openclaw/openclaw)\n- [OpenClaw 文档](https://docs.openclaw.ai)"},"en":{"name":"OpenClaw as Desktop Cowork (AionUi) — Remote Rescue & Multi-","content":"# OpenClaw as Desktop Cowork (AionUi) — Remote Rescue & Multi-Agent Hub\n\nUse OpenClaw from a desktop Cowork UI, access it from Telegram or WebUI when you’re away, and fix it remotely when it won’t connect. AionUi is a free, open-source app that runs **OpenClaw as a first-class agent** alongside 12+ others (Claude Code, Codex, Qwen Code, etc.), with a built-in **OpenClaw deployment expert** for install, diagnose, and repair — including **remote rescue** when OpenClaw is down and you’re not at the machine.\n\n## Why OpenClaw + AionUi\n\n| If you want… | AionUi gives you… |\n|---------------|--------------------|\n| **Use OpenClaw with a real desktop UI** | Cowork workspace where you see OpenClaw (and other agents) read/write files, run commands, browse the web — not just terminal/chat. |\n| **Fix OpenClaw when it’s broken and you’re remote** | Open AionUi via **Telegram or WebUI** from anywhere → use the **OpenClaw deployment expert** to run `openclaw doctor`, fix config, restart gateway. Many users rely on this. |\n| **One place for OpenClaw + other agents** | OpenClaw, built-in agent, Claude Code, Codex, etc. in one app; switch or run in parallel, same MCP config for all. |\n| **Remote access to your OpenClaw** | WebUI, Telegram, Lark, DingTalk — talk to the same AionUi instance (and thus OpenClaw) from phone or another device. |\n\n## Pain Point\n\nYou already use OpenClaw from CLI or Telegram, but:\n\n- You want to **see** what the agent is doing (files, terminal, web) instead of inferring from logs.\n- When **OpenClaw won’t connect** and you’re not at the machine, you have no way to run `openclaw doctor` or fix config — you need remote access to something that can repair OpenClaw.\n- You use several CLI agents (OpenClaw, Claude Code, Codex, …) and don’t want to juggle apps or reconfigure MCP for each.\n\n## What It Does\n\n- **OpenClaw as a Cowork agent**: Install AionUi and OpenClaw; AionUi auto-detects OpenClaw. Use OpenClaw from the same Cowork UI — file-aware workspace, visible actions.\n- **Remote OpenClaw rescue**: When OpenClaw is broken or unreachable, open AionUi via **Telegram or WebUI** and use the built-in **OpenClaw deployment expert**. It helps with install, runs `openclaw doctor`, fixes config, restarts gateway, and walks you through recovery. A common pattern for users who run OpenClaw headless or on another machine.\n- **Multi-agent in one app**: Run OpenClaw next to built-in agent (Gemini/OpenAI/Anthropic/Ollama), Claude Code, Codex, and 12+ others — one interface, parallel sessions.\n- **MCP once, all agents**: Configure MCP servers in AionUi once; they sync to OpenClaw and every other agent — no per-agent MCP setup.\n- **Remote access**: Use WebUI, Telegram, Lark, or DingTalk to reach your AionUi instance (and OpenClaw) from anywhere.\n- **Optional automation**: AionUi cron can run OpenClaw (or other agents) on a schedule for 24/7 tasks.\n\n## Skills You Need\n\n- **OpenClaw** (e.g. `npm install -g openclaw@latest`). AionUi’s **OpenClaw Setup** assistant can guide install, gateway, and config.\n- API keys or auth for your models (OpenClaw config + any built-in agent keys in AionUi).\n\n## How to Set It Up\n\n1. **Install AionUi**: [AionUi Releases](https://github.com/iOfficeAI/AionUi/releases) (macOS / Windows / Linux).\n2. **Install OpenClaw** (if needed):\n   ```bash\n   npm install -g openclaw@latest\n   openclaw onboard --install-daemon   # optional: daemon for 24/7\n   ```\n3. **Open AionUi**: It auto-detects OpenClaw. If not, use the in-app **OpenClaw Setup** assistant.\n4. **Create a Cowork session** and choose OpenClaw. Same workspace, MCP, and (if enabled) remote channels.\n\nFor remote access or cron, configure channels and automation in AionUi settings.\n\n## Related Links\n\n- [AionUi GitHub](https://github.com/iOfficeAI/AionUi)\n- [AionUi Website](https://www.aionui.com)\n- [OpenClaw GitHub](https://github.com/openclaw/openclaw)\n- [OpenClaw Docs](https://docs.openclaw.ai)\n"},"category":"productivity"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

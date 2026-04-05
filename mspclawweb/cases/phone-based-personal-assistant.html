@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>基于电话的个人助手 | MSP-龙虾应用案例</title>
+  <meta name="description" content="您希望在任何电话上访问您的 AI 代理，而无需智能手机应用或互联网浏览器。在开车、行走或双手被占用时，您需要免提语音协助。" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>生产力工具</span>
+      <span data-en>Productivity</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>基于电话的个人助手</span>
+      <span data-en>Phone-Based Personal Assistant</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/phone-based-personal-assistant.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"基于电话的个人助手","content":"# 基于电话的个人助手\n\n## 痛点\n\n您希望在任何电话上访问您的 AI 代理，而无需智能手机应用或互联网浏览器。在开车、行走或双手被占用时，您需要免提语音协助。\n\n## 功能介绍\n\nClawdTalk 使 OpenClaw 能够接收和拨打电话，将任何电话变成通往您的 AI 助手的网关。您可以：\n- 拨打电话号码通过语音与您的 AI 代理进行交谈\n- 通过语音获取日历提醒、Jira 更新和网页搜索结果\n- 与 Telnyx 集成以实现可靠的电话连接\n\n短信支持即将推出。\n\n## 提示词\n\n```\nYou are available via phone. When I call, greet me and ask how I can help.\n\nFor calendar queries: \"What's on my calendar today?\"\nFor Jira updates: \"Show me my open tickets\"\nFor web search: \"Search for latest news on AI agents\"\n```\n\n## 所需技能\n\n- [ClawdTalk](https://github.com/team-telnyx/clawdtalk-client)\n- 日历技能（Google Calendar 或 Outlook）\n- Jira 技能\n- 网页搜索技能\n\n## 相关链接\n\n- [ClawdTalk 网站](https://clawdtalk.com)\n- [ClawdTalk GitHub](https://github.com/team-telnyx/clawdtalk-client)\n- [Telnyx API](https://telnyx.com/)\n- [OpenClaw 技能](https://github.com/openclaw/skills)"},"en":{"name":"Phone-Based Personal Assistant","content":"# Phone-Based Personal Assistant\n\n## Pain Point\n\nYou want to access your AI agent from any phone without needing a smartphone app or internet browser. You need hands-free voice assistance while driving, walking, or when your hands are occupied.\n\n## What It Does\n\nClawdTalk enables OpenClaw to receive and make phone calls, turning any phone into a gateway to your AI assistant. You can:\n- Call a phone number to speak with your AI agent via voice\n- Get calendar reminders, Jira updates, and web search results via voice\n- Integrate with Telnyx for reliable phone connectivity\n\nSMS support is coming soon.\n\n## Prompts\n\n```\nYou are available via phone. When I call, greet me and ask how I can help.\n\nFor calendar queries: \"What's on my calendar today?\"\nFor Jira updates: \"Show me my open tickets\"\nFor web search: \"Search for latest news on AI agents\"\n```\n\n## Skills Needed\n\n- [ClawdTalk](https://github.com/team-telnyx/clawdtalk-client)\n- Calendar skill (Google Calendar or Outlook)\n- Jira skill\n- Web search skill\n\n## Related Links\n\n- [ClawdTalk Website](https://clawdtalk.com)\n- [ClawdTalk GitHub](https://github.com/team-telnyx/clawdtalk-client)\n- [Telnyx API](https://telnyx.com/)\n- [OpenClaw Skills](https://github.com/openclaw/skills)\n"},"category":"productivity"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

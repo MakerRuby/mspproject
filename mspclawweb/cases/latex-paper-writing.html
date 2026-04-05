@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LaTeX 论文写作 | MSP-龙虾应用案例</title>
+  <meta name="description" content="搭建本地 LaTeX 环境非常麻烦——安装 TeX Live 需要数个 GB，调试编译错误很繁琐，在编辑器和 PDF 查看器之间切换会打断思路。你想要以对话方式编写和编译 LaTeX 论文，而无需任何本地设置。" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">← <span data-zh>返回案例库</span><span data-en>Back to Cases</span></a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>研究与学习</span>
+      <span data-en>Research & Learning</span>
+    </span>
+    <h1 class="case-title-zh">
+      <span data-zh>LaTeX 论文写作</span>
+      <span data-en>LaTeX Paper Writing</span>
+    </h1>
+    <hr class="case-divider" />
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/latex-paper-writing.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span><span data-en>View on GitHub</span> ↗
+      </a>
+    </footer>
+  </main>
+  <script>window.CASE_DATA = {"zh":{"name":"LaTeX 论文写作","content":"# LaTeX 论文写作\n\n搭建本地 LaTeX 环境非常麻烦——安装 TeX Live 需要数个 GB，调试编译错误很繁琐，在编辑器和 PDF 查看器之间切换会打断思路。你想要以对话方式编写和编译 LaTeX 论文，而无需任何本地设置。\n\n这个工作流将你的 agent 变成一个具有即时编译功能的 LaTeX 写作助手：\n\n- 与 agent 协作编写 LaTeX —— 描述你的需求，它生成源代码\n- 使用 pdflatex、xelatex 或 lualatex 即时编译为 PDF（无需本地 TeX 安装）\n- 在应用内预览 PDF，无需切换到其他应用\n- 使用启动模板（article、IEEE、beamer、中文论文）跳过样板代码\n- BibTeX/BibLaTeX 参考文献支持——只需粘贴你的 .bib 文件内容\n\n## 所需技能\n\n- [latex-compiler](https://github.com/Prismer-AI/Prismer/tree/main/skills/latex-compiler) 技能（4 个工具：`latex_compile`、`latex_preview`、`latex_templates`、`latex_get_template`）\n- Prismer 工作区容器（在端口 8080 上运行完整 TeX Live 的 LaTeX 服务器）\n\n## 设置方法\n\n1. 使用 Docker 克隆并部署 [Prismer](https://github.com/Prismer-AI/Prismer)（LaTeX 服务器和完整 TeX Live 会自动启动）：\n```bash\ngit clone https://github.com/Prismer-AI/Prismer.git && cd Prismer\ndocker compose -f docker/docker-compose.dev.yml up\n```\n\n2. `latex-compiler` 技能是内置的——无需安装。提示 OpenClaw：\n```text\n帮我用 LaTeX 写一篇研究论文。这是我的工作流：\n\n1. 从 IEEE 模板开始（或根据需要选择 article/beamer）\n2. 当我描述一个章节时，为它生成 LaTeX 源代码\n3. 每次主要编辑后，编译并预览 PDF，让我检查格式\n4. 如果有编译错误，读取日志并自动修复\n5. 当我提供 BibTeX 条目时，将它们添加到参考文献并重新编译\n\n如果我需要中文/CJK 支持，使用 xelatex，否则默认使用 pdflatex。\n总是运行 2 遍来处理交叉引用。\n```\n\n3. 尝试一下：\"开始一篇新的 IEEE 论文，标题为 'A Survey of LLM Agents'。给我填充了摘要和介绍章节的模板，然后编译它。\""},"en":{"name":"LaTeX Paper Writing","content":"# LaTeX Paper Writing\n\nSetting up a local LaTeX environment is painful — installing TeX Live takes gigabytes, debugging compilation errors is tedious, and switching between your editor and PDF viewer breaks flow. You want to write and compile LaTeX papers conversationally without any local setup.\n\nThis workflow turns your agent into a LaTeX writing assistant with instant compilation:\n\n- Write LaTeX collaboratively with the agent — describe what you want and it generates the source\n- Compile to PDF instantly with pdflatex, xelatex, or lualatex (no local TeX installation needed)\n- Preview PDFs inline without switching to another app\n- Use starter templates (article, IEEE, beamer, Chinese article) to skip boilerplate\n- Bibliography support with BibTeX/BibLaTeX — just paste your .bib content\n\n## Skills you Need\n\n- [latex-compiler](https://github.com/Prismer-AI/Prismer/tree/main/skills/latex-compiler) skill (4 tools: `latex_compile`, `latex_preview`, `latex_templates`, `latex_get_template`)\n- Prismer workspace container (runs the LaTeX server on port 8080 with full TeX Live)\n\n## How to Set it Up\n\n1. Clone and deploy [Prismer](https://github.com/Prismer-AI/Prismer) with Docker (the LaTeX server with full TeX Live starts automatically):\n```bash\ngit clone https://github.com/Prismer-AI/Prismer.git && cd Prismer\ndocker compose -f docker/docker-compose.dev.yml up\n```\n\n2. The `latex-compiler` skill is built-in — no installation needed. Prompt OpenClaw:\n```text\nHelp me write a research paper in LaTeX. Here's my workflow:\n\n1. Start from the IEEE template (or article/beamer depending on what I need)\n2. When I describe a section, generate the LaTeX source for it\n3. After each major edit, compile and preview the PDF so I can check formatting\n4. If there are compilation errors, read the log and fix them automatically\n5. When I provide BibTeX entries, add them to the bibliography and recompile\n\nUse xelatex if I need Chinese/CJK support, otherwise default to pdflatex.\nAlways run 2 passes for cross-references.\n```\n\n3. Try it: \"Start a new IEEE paper titled 'A Survey of LLM Agents'. Give me the template with abstract and introduction sections filled in, then compile it.\"\n"},"category":"research"};</script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

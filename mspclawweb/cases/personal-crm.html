@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>个人 CRM 与自动联系人发现 | MSP-龙虾应用案例</title>
+  <meta name="description" content="手动跟踪你见过的人、见面时间和讨论内容是不可能的。重要的跟进工作会被遗漏，在重要会议前你会忘记背景信息。" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>生产力工具</span>
+      <span data-en>Productivity</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>个人 CRM 与自动联系人发现</span>
+      <span data-en>Personal CRM with Automatic Contact Discovery</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/personal-crm.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"个人 CRM 与自动联系人发现","content":"# 个人 CRM 与自动联系人发现\n\n手动跟踪你见过的人、见面时间和讨论内容是不可能的。重要的跟进工作会被遗漏，在重要会议前你会忘记背景信息。\n\n这个工作流自动构建和维护个人 CRM：\n\n• 每日定时任务扫描邮件和日历以发现新联系人和互动记录\n• 将联系人存储在结构化数据库中，包含关系上下文\n• 自然语言查询：\"我对 [人名] 了解什么？\"、\"谁需要跟进？\"、\"我上次和 [人名] 谈话是什么时候？\"\n• 每日会议准备简报：在每天的会议前，通过 CRM 和邮件历史研究外部与会者并发送简报\n\n## 所需技能\n\n- `gog` CLI（用于 Gmail 和 Google Calendar）\n- 自定义 CRM 数据库（SQLite 或类似的）或使用 [crm-query](https://clawhub.ai) 技能（如果可用）\n- 用于 CRM 查询的 Telegram 话题\n\n## 设置步骤\n\n1. 创建 CRM 数据库：\n```sql\nCREATE TABLE contacts (\n  id INTEGER PRIMARY KEY,\n  name TEXT,\n  email TEXT,\n  first_seen TEXT,\n  last_contact TEXT,\n  interaction_count INTEGER,\n  notes TEXT\n);\n```\n2. 设置一个名为\"personal-crm\"的 Telegram 话题用于查询。\n3. 提示 OpenClaw：\n```text\n每天早上 6 点运行定时任务：\n1. 扫描过去 24 小时内的 Gmail 和日历\n2. 提取新联系人并更新现有联系人\n3. 记录互动（会议、邮件）及其时间戳和背景信息\n\n同时，每天早上 7 点：\n1. 检查今天的日历会议\n2. 对于每个外部与会者，搜索我的 CRM 和邮件历史\n3. 向 Telegram 发送简报，包括：他们是谁、上次交谈的时间、讨论内容以及任何跟进项目\n\n当我在 personal-crm 话题中提问某个联系人时，搜索数据库并告诉我所有相关信息。\n```"},"en":{"name":"Personal CRM with Automatic Contact Discovery","content":"# Personal CRM with Automatic Contact Discovery\n\nKeeping track of who you've met, when, and what you discussed is impossible to do manually. Important follow-ups slip through the cracks, and you forget context before important meetings.\n\nThis workflow builds and maintains a personal CRM automatically:\n\n• Daily cron job scans email and calendar for new contacts and interactions\n• Stores contacts in a structured database with relationship context\n• Natural language queries: \"What do I know about [person]?\", \"Who needs follow-up?\", \"When did I last talk to [person]?\"\n• Daily meeting prep briefing: before each day's meetings, researches external attendees via CRM + email history and delivers a briefing\n\n## Skills you Need\n\n- `gog` CLI (for Gmail and Google Calendar)\n- Custom CRM database (SQLite or similar) or use the [crm-query](https://clawhub.ai) skill if available\n- Telegram topic for CRM queries\n\n## How to Set it Up\n\n1. Create a CRM database:\n```sql\nCREATE TABLE contacts (\n  id INTEGER PRIMARY KEY,\n  name TEXT,\n  email TEXT,\n  first_seen TEXT,\n  last_contact TEXT,\n  interaction_count INTEGER,\n  notes TEXT\n);\n```\n2. Set up a Telegram topic called \"personal-crm\" for queries.\n3. Prompt OpenClaw:\n```text\nRun a daily cron job at 6 AM to:\n1. Scan my Gmail and Calendar for the past 24 hours\n2. Extract new contacts and update existing ones\n3. Log interactions (meetings, emails) with timestamps and context\n\nAlso, every morning at 7 AM:\n1. Check my calendar for today's meetings\n2. For each external attendee, search my CRM and email history\n3. Deliver a briefing to Telegram with: who they are, when we last spoke, what we discussed, and any follow-up items\n\nWhen I ask about a contact in the personal-crm topic, search the database and give me everything you know.\n```\n"},"category":"productivity"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

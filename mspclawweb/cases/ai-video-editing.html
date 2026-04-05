@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>通过聊天进行 AI 视频编辑 | MSP-龙虾应用案例</title>
+  <meta name="description" content="视频编辑通常意味着打开时间轴编辑器、拖动片段，以及点击菜单。对于重复性编辑——修剪片头、为一批片段添加字幕、调整 10 个视频的颜色——这种手动循环会耗费数小时。" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">← <span data-zh>返回案例库</span><span data-en>Back to Cases</span></a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>创意与构建</span>
+      <span data-en>Creative & Building</span>
+    </span>
+    <h1 class="case-title-zh">
+      <span data-zh>通过聊天进行 AI 视频编辑</span>
+      <span data-en>AI Video Editing via Chat</span>
+    </h1>
+    <hr class="case-divider" />
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/ai-video-editing.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span><span data-en>View on GitHub</span> ↗
+      </a>
+    </footer>
+  </main>
+  <script>window.CASE_DATA = {"zh":{"name":"通过聊天进行 AI 视频编辑","content":"# 通过聊天进行 AI 视频编辑\n\n视频编辑通常意味着打开时间轴编辑器、拖动片段，以及点击菜单。对于重复性编辑——修剪片头、为一批片段添加字幕、调整 10 个视频的颜色——这种手动循环会耗费数小时。\n\n这个用例将视频编辑转变为一场对话。描述你想要的更改、上传文件，然后获得结果。无需时间轴，无需 GUI。\n\n## 你可以做什么\n\n- 通过纯自然语言描述时间戳来修剪、剪切和合并片段\n- 添加背景音乐并自动降低人声\n- 从语音生成并烧录字幕（50+ 种语言）\n- 对素材进行调色（\"使其更温暖\"、\"匹配第一个片段的外观\"）\n- 裁剪为竖屏格式（用于 TikTok/Reels/Shorts）\n- 批量处理多个文件并应用相同编辑\n\n## 你需要的技能\n\n- [video-editor-ai](https://clawhub.ai/skills/video-editor-ai) — 基于聊天的视频编辑，包含背景音乐、字幕和导出功能\n- [ai-subtitle-generator](https://clawhub.ai/skills/ai-subtitle-generator) — 自动字幕、字幕烧录、SRT 导出\n\n## 如何设置\n\n1. 安装技能：\n```bash\nclawhub install video-editor-ai\nclawhub install ai-subtitle-generator\n```\n\n2. 将视频文件拖入聊天并描述你的编辑需求：\n```text\n将这个视频从 0:15 修剪到 1:30，添加背景音乐（一些高能的），\n并用英文烧录字幕。\n```\n\n3. 对于批量处理，描述处理模式：\n```text\n我在 /videos/raw/ 中有 5 个片段。对于每一个：\n- 裁剪为 9:16 竖屏格式\n- 在底部添加自动生成的字幕\n- 导出为 mp4\n```\n\nAgent 会处理 API 调用、轮询完成状态，并将完成的文件返回到聊天中。\n\n## 提示\n\n- 明确指定时间戳和输出格式（\"以 1080p 分辨率导出为 mp4\"）\n- 对于字幕工作，如果源语言不是英文，请提及源语言\n- 调色效果最好使用参考描述（\"温暖的日落色调\"）而不是技术数值\n- 避免上传敏感素材（人脸、身份证件、机密屏幕截图），除非你已查看提供商的数据保留和隐私政策"},"en":{"name":"AI Video Editing via Chat","content":"# AI Video Editing via Chat\n\nEditing videos usually means opening a timeline editor, dragging clips around, and clicking through menus. For repetitive edits — trimming intros, adding subtitles to a batch of clips, adjusting color on 10 videos — that manual loop eats hours.\n\nThis use case turns video editing into a conversation. Describe what you want changed, drop the file, and get the result back. No timeline, no GUI.\n\n## What You Can Do\n\n- Trim, cut, and merge clips by describing timestamps in plain language\n- Add background music with automatic audio ducking\n- Generate and burn subtitles from speech (50+ languages)\n- Color grade footage (\"make it warmer\", \"match the look of the first clip\")\n- Crop to vertical for TikTok/Reels/Shorts\n- Batch process multiple files with the same edit\n\n## Skills You Need\n\n- [video-editor-ai](https://clawhub.ai/skills/video-editor-ai) — chat-based video editing with BGM, subtitles, and export\n- [ai-subtitle-generator](https://clawhub.ai/skills/ai-subtitle-generator) — auto captions, subtitle burning, SRT export\n\n## How to Set It Up\n\n1. Install the skills:\n```bash\nclawhub install video-editor-ai\nclawhub install ai-subtitle-generator\n```\n\n2. Drop a video file into chat and describe your edit:\n```text\nTrim this video from 0:15 to 1:30, add background music (something upbeat),\nand burn subtitles in English.\n```\n\n3. For batch processing, describe the pattern:\n```text\nI have 5 clips in /videos/raw/. For each one:\n- Crop to 9:16 vertical\n- Add auto-generated captions at the bottom\n- Export as mp4\n```\n\nThe agent handles the API calls, polls for completion, and delivers the finished files back to chat.\n\n## Tips\n\n- Be specific about timestamps and output format (\"export as mp4 at 1080p\")\n- For subtitle work, mention the source language if it's not English\n- Color grading works best with reference descriptions (\"warm sunset tones\") rather than technical values\n- Avoid uploading sensitive footage (faces, IDs, confidential screens) unless you've reviewed the provider's data retention and privacy policy\n"},"category":"creative"};</script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

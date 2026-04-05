@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>活动嘉宾确认 | MSP-龙虾应用案例</title>
+  <meta name="description" content="你正在举办一场活动——晚宴、婚礼、公司团建——需要向嘉宾列表中的人员确认出席情况。手动拨打 20 多个电话很繁琐：你会经历电话追踪、忘记谁说过什么、无法跟踪饮食限制或加一规则。发送短信有时有效，但人们经常忽略消息。真正的电话通话会获得更高的" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>生产力工具</span>
+      <span data-en>Productivity</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>活动嘉宾确认</span>
+      <span data-en>Event Guest Confirmation</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/event-guest-confirmation.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"活动嘉宾确认","content":"# 活动嘉宾确认\n\n你正在举办一场活动——晚宴、婚礼、公司团建——需要向嘉宾列表中的人员确认出席情况。手动拨打 20 多个电话很繁琐：你会经历电话追踪、忘记谁说过什么、无法跟踪饮食限制或加一规则。发送短信有时有效，但人们经常忽略消息。真正的电话通话会获得更高的回复率。\n\n此用例利用 OpenClaw 使用 [SuperCall](https://clawhub.ai/xonder/supercall) 插件拨打列表中的每位嘉宾，确认他们是否参加，收集任何备注，并为你汇总所有信息。\n\n## 工作原理\n\n- 遍历嘉宾列表（姓名 + 电话号码）并拨打每一位\n- AI 以友好的人设向自己介绍为你的活动协调员\n- 与嘉宾确认活动日期、时间和地点\n- 询问他们是否参加，并收集任何备注（饮食需求、加一、到达时间等）\n- 所有通话完成后，汇总报告：谁确认了、谁拒绝了、谁没有接听，以及任何备注\n\n## 为什么使用 SuperCall\n\n此用例专门适用于 [SuperCall](https://clawhub.ai/xonder/supercall) 插件——不是内置的 `voice_call` 插件。关键区别：SuperCall 是一个完全独立的语音代理。通话中的 AI 人设**只能访问你提供的上下文**（人设名称、目标和开场白）。它无法访问你的网关代理、文件、其他工具或任何其他内容。\n\n这对于嘉宾确认很重要，原因如下：\n\n- **安全性**：通话另一端的人无法通过对话操纵或访问你的代理。不存在提示注入或数据泄露的风险。\n- **更好的对话**：因为 AI 限定在单一的聚焦任务（确认出席），它会保持话题相关，处理通话比通用代理更自然。\n- **批量友好**：你要向不同的人拨打很多电话。一个在每次通话时重置的沙盒人设正是你需要的——不同对话之间没有溅射。\n\n## 所需技能\n\n- [SuperCall](https://clawhub.ai/xonder/supercall) — 通过 `openclaw plugins install @xonder/supercall` 安装\n- 带有电话号码的 Twilio 账户（用于拨打出站电话）\n- OpenAI API 密钥（用于 GPT-4o Realtime 语音 AI）\n- ngrok（用于 webhook 隧道——免费版本可用）\n\n查看 [SuperCall README](https://github.com/xonder/supercall) 了解完整配置说明。\n\n## 如何设置\n\n1. 按照 [设置指南](https://github.com/xonder/supercall#configuration) 安装和配置 SuperCall。确保在 OpenClaw 配置中启用了钩子。\n\n2. 准备嘉宾列表。你可以直接在聊天中粘贴或保存在文件中：\n\n```text\n嘉宾列表 — 夏日烧烤，周六 6 月 14 日，下午 4 点，橡树街 23 号\n\n- Sarah Johnson: +15551234567\n- Mike Chen: +15559876543\n- Rachel Torres: +15555551234\n- David Kim: +15558887777\n```\n\n3. 向 OpenClaw 提示：\n\n```text\n我需要你为我的活动确认出席情况。以下是详细信息：\n\n活动：夏日烧烤\n日期：周六，6 月 14 日，下午 4 点\n地点：橡树街 23 号\n\n以下是我的嘉宾列表：\n<在此粘贴你的嘉宾列表>\n\n对于每位嘉宾，使用 supercall 拨打他们。使用人设\"Jamie，[你的名字]的活动协调员\"。每次通话的目标是确认他们是否参加，\n并记录任何饮食限制、加一或其他评论。\n\n每次通话后，记录结果。所有通话完成后，给我一个完整的摘要：\n- 谁确认了\n- 谁拒绝了\n- 谁没有接听\n- 每位嘉宾的任何备注或特殊要求\n```\n\n4. OpenClaw 将使用 SuperCall 逐个拨打每位嘉宾，然后汇总结果。你可以随时通过请求状态更新来检查进度。\n\n## 关键见解\n\n- **从小规模测试开始**：先用 2-3 位嘉宾试试，确��人设和开场白听起来合适。在拨打完整列表前，你可以调整语气。\n- **注意通话时间**：不要在太早或太晚的时间安排通话。你可以告诉 OpenClaw 只在特定时间段内拨打。\n- **查看录音文本**：SuperCall 将录音文本记录到 `~/clawd/supercall-logs`。第一批通话后浏览一遍，看看对话进展如何。\n- **无人接听处理**：如果有人没有接听，OpenClaw 可以记录下来，你可以决定稍后重试还是通过短信跟进。\n- **真实电话需要花钱**：每通电话使用 Twilio 分钟数。在你的 Twilio 账户中设置适当的限制，尤其是对于大型嘉宾列表。\n\n## 相关链接\n\n- [ClawHub 上的 SuperCall](https://clawhub.ai/xonder/supercall)\n- [GitHub 上的 SuperCall](https://github.com/xonder/supercall)\n- [Twilio 控制台](https://console.twilio.com)\n- [OpenAI Realtime API](https://platform.openai.com/docs/guides/realtime)\n- [ngrok](https://ngrok.com)"},"en":{"name":"Event Guest Confirmation","content":"# Event Guest Confirmation\n\nYou're hosting an event — a dinner party, a wedding, a company offsite — and you need to confirm attendance from a list of guests. Manually calling 20+ people is tedious: you play phone tag, forget who said what, and lose track of dietary restrictions or plus-ones. Texting works sometimes, but people ignore messages. A real phone call gets a much higher response rate.\n\nThis use case has OpenClaw call each guest on your list using the [SuperCall](https://clawhub.ai/xonder/supercall) plugin, confirm whether they're attending, collect any notes, and compile everything into a summary for you.\n\n## What It Does\n\n- Iterates through a guest list (names + phone numbers) and calls each one\n- The AI introduces itself as your event coordinator with a friendly persona\n- Confirms the event date, time, and location with the guest\n- Asks if they're attending, and collects any notes (dietary needs, plus-ones, arrival time, etc.)\n- After all calls are complete, compiles a summary: who confirmed, who declined, who didn't pick up, and any notes\n\n## Why SuperCall\n\nThis use case works with the [SuperCall](https://clawhub.ai/xonder/supercall) plugin specifically — not the built-in `voice_call` plugin. The key difference: SuperCall is a fully standalone voice agent. The AI persona on the call **only has access to the context you provide** (the persona name, the goal, and the opening line). It cannot access your gateway agent, your files, your other tools, or anything else.\n\nThis matters for guest confirmation because:\n\n- **Safety**: The person on the other end of the call can't manipulate or access your agent through the conversation. There's no risk of prompt injection or data leakage.\n- **Better conversations**: Because the AI is scoped to a single focused task (confirm attendance), it stays on-topic and handles the call more naturally than a general-purpose voice agent would.\n- **Batch-friendly**: You're making many calls to different people. A sandboxed persona that resets per call is exactly what you want — no bleed-over between conversations.\n\n## Skills You Need\n\n- [SuperCall](https://clawhub.ai/xonder/supercall) — install via `openclaw plugins install @xonder/supercall`\n- A Twilio account with a phone number (for making outbound calls)\n- An OpenAI API key (for the GPT-4o Realtime voice AI)\n- ngrok (for webhook tunneling — free tier works)\n\nSee the [SuperCall README](https://github.com/xonder/supercall) for full configuration instructions.\n\n## How to Set It Up\n\n1. Install and configure SuperCall following the [setup guide](https://github.com/xonder/supercall#configuration). Make sure hooks are enabled in your OpenClaw config.\n\n2. Prepare your guest list. You can paste it directly in chat or keep it in a file:\n\n```text\nGuest List — Summer BBQ, Saturday June 14th, 4 PM, 23 Oak Street\n\n- Sarah Johnson: +15551234567\n- Mike Chen: +15559876543\n- Rachel Torres: +15555551234\n- David Kim: +15558887777\n```\n\n3. Prompt OpenClaw:\n\n```text\nI need you to confirm attendance for my event. Here are the details:\n\nEvent: Summer BBQ\nDate: Saturday, June 14th at 4 PM\nLocation: 23 Oak Street\n\nHere is my guest list:\n<paste your guest list here>\n\nFor each guest, use supercall to call them. Use the persona \"Jamie, event coordinator\nfor [your name]\". The goal for each call is to confirm whether they're attending,\nand note any dietary restrictions, plus-ones, or other comments.\n\nAfter each call, log the result. Once all calls are done, give me a full summary:\n- Who confirmed\n- Who declined\n- Who didn't answer\n- Any notes or special requests from each guest\n```\n\n4. OpenClaw will call each guest one by one using SuperCall, then compile the results. You can check in on progress at any time by asking for a status update.\n\n## Key Insights\n\n- **Start with a small test**: Try it with 2-3 guests first to make sure the persona and opening line sound right. You can adjust the tone before calling the full list.\n- **Be mindful of calling hours**: Don't schedule calls too early or too late. You can tell OpenClaw to only call between certain hours.\n- **Review transcripts**: SuperCall logs transcripts to `~/clawd/supercall-logs`. Skim through them after the first batch to see how conversations went.\n- **No-answer handling**: If someone doesn't pick up, OpenClaw can note it and you can decide whether to retry later or follow up by text.\n- **Real phone calls cost money**: Each call uses Twilio minutes. Set appropriate limits in your Twilio account, especially for large guest lists.\n\n## Related Links\n\n- [SuperCall on ClawHub](https://clawhub.ai/xonder/supercall)\n- [SuperCall on GitHub](https://github.com/xonder/supercall)\n- [Twilio Console](https://console.twilio.com)\n- [OpenAI Realtime API](https://platform.openai.com/docs/guides/realtime)\n- [ngrok](https://ngrok.com)\n"},"category":"productivity"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

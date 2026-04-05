@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>多智能体内容工厂 | MSP-龙虾应用案例</title>
+  <meta name="description" content="作为内容创作者，你需要在多个平台上处理研究、写作和设计。每一步——寻找热门话题、撰写脚本、生成缩略图——都要花费你数小时的时间。如果有一个专业的团队能在一夜之间处理所有这些工作呢？" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>创意与构建</span>
+      <span data-en>Creative & Building</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>多智能体内容工厂</span>
+      <span data-en>Multi-Agent Content Factory</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/content-factory.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"多智能体内容工厂","content":"# 多智能体内容工厂\n\n作为内容创作者，你需要在多个平台上处理研究、写作和设计。每一步——寻找热门话题、撰写脚本、生成缩略图——都要花费你数小时的时间。如果有一个专业的团队能在一夜之间处理所有这些工作呢？\n\n这个工作流在 Discord 中建立了一个多智能体内容工厂，其中不同的智能体在专门的频道中处理研究、写作和视觉资产。\n\n## 它的功能\n\n- **研究智能体** 每天早上扫描热门故事、竞争对手内容和社交媒体，寻找最佳内容机会\n- **写作智能体** 采用最好的创意，撰写完整的脚本、线程或时事通讯草稿\n- **缩略图智能体** 为内容生成 AI 缩略图或封面图像\n- 每个智能体在自己的 Discord 频道中工作，保持一切有条理且可审阅\n- 按计划自动运行（例如每天上午 8 点），让你一觉醒来就能看到完成的内容\n\n## 痛点\n\n内容创作有三个阶段——研究、写作和设计——而大多数创作者都在手动处理这三个阶段。即使使用 AI 写作工具，你仍然需要逐个提示它们。这个系统将智能体以管道方式链接在一起，其中一个智能体的输出作为下一个的输入，完全无需手动操作。\n\n## 你需要的技能\n\n- 与多个频道的 Discord 集成\n- `sessions_spawn` / `sessions_send` 用于多智能体编排\n- [x-research-v2](https://clawhub.ai) 或类似工具用于社交媒体研究\n- 本地图像生成（例如 Nano Banana）或图像生成 API\n- [knowledge-base](https://clawhub.ai) 技能（可选，用于 RAG 驱动的研究）\n\n## 如何设置\n\n1. 建立一个 Discord 服务器（或要求 OpenClaw 为你建立——只需说\"为我们建立一个 Discord\"）。\n\n2. 为每个智能体创建频道：\n   - `#research` — 热门话题和内容机会\n   - `#scripts` — 撰写的草稿和大纲\n   - `#thumbnails` — 生成的图像和封面艺术\n\n3. 提示 OpenClaw：\n```text\nI want you to build me a content factory inside of Discord.\nSet up channels for different agents:\n\n1. Research Agent (#research): Every morning at 8 AM, research top trending\n   stories, competitor content, and what's performing well on social media\n   in my niche. Post the top 5 content opportunities with sources.\n\n2. Writing Agent (#scripts): Take the best idea from the research agent\n   and write a full script/thread/newsletter draft. Post it in #scripts.\n\n3. Thumbnail Agent (#thumbnails): Generate AI thumbnails or cover images\n   for the content. Post them in #thumbnails.\n\nHave all their work organized in different channels.\nRun this pipeline automatically every morning.\n```\n\n4. 针对你的平台进行定制：\n```text\nI focus on X/Twitter threads, not YouTube. Change the writing agent\nto produce tweet threads instead of video scripts.\n```\n\n## 关键见解\n\n- 力量在于**链式智能体**——研究为写作提供信息，写作为缩略图生成提供信息。你不需要逐个提示每个步骤。\n- Discord 频道使你可以轻松分别审阅每个智能体的工作，并给出反馈，如\"脚本太长\"或\"专注于更多 AI 新闻\"。\n- 你可以将其改编为任何内容格式：推文、时事通讯、LinkedIn 帖子、播客大纲、博客文章。\n- 运行本地模型进行图像生成（如在 Mac Studio 上运行 Nano Banana）可以降低成本并让你获得更多控制权。\n\n## 基于\n\n灵感来自 [Alex Finn 关于改变人生的 OpenClaw 用例的视频](https://www.youtube.com/watch?v=41_TNGDDnfQ)。\n\n## 相关链接\n\n- [OpenClaw 子智能体文档](https://github.com/openclaw/openclaw)\n- [Discord Bot 设置](https://discord.com/developers/docs)"},"en":{"name":"Multi-Agent Content Factory","content":"# Multi-Agent Content Factory\n\nYou're a content creator juggling research, writing, and design across multiple platforms. Each step — finding trending topics, writing scripts, generating thumbnails — eats hours of your day. What if a team of specialized agents handled all of it overnight?\n\nThis workflow sets up a multi-agent content factory inside Discord, where different agents handle research, writing, and visual assets in dedicated channels.\n\n## What It Does\n\n- **Research Agent** scans trending stories, competitor content, and social media for the best content opportunities each morning\n- **Writing Agent** takes the top ideas and writes full scripts, threads, or newsletter drafts\n- **Thumbnail Agent** generates AI thumbnails or cover images for the content\n- Each agent works in its own Discord channel, keeping everything organized and reviewable\n- Runs automatically on a schedule (e.g., daily at 8 AM) so you wake up to finished content\n\n## Pain Point\n\nContent creation has three phases — research, writing, and design — and most creators are doing all three manually. Even with AI writing tools, you still have to prompt them one at a time. This system chains agents together in a pipeline where one agent's output feeds the next, completely hands-free.\n\n## Skills You Need\n\n- Discord integration with multiple channels\n- `sessions_spawn` / `sessions_send` for multi-agent orchestration\n- [x-research-v2](https://clawhub.ai) or similar for social media research\n- Local image generation (e.g., Nano Banana) or an image generation API\n- [knowledge-base](https://clawhub.ai) skill (optional, for RAG-powered research)\n\n## How to Set It Up\n\n1. Set up a Discord server (or ask OpenClaw to do it for you — just say \"Set up a Discord for us\").\n\n2. Create channels for each agent:\n   - `#research` — trending topics and content opportunities\n   - `#scripts` — written drafts and outlines\n   - `#thumbnails` — generated images and cover art\n\n3. Prompt OpenClaw:\n```text\nI want you to build me a content factory inside of Discord.\nSet up channels for different agents:\n\n1. Research Agent (#research): Every morning at 8 AM, research top trending\n   stories, competitor content, and what's performing well on social media\n   in my niche. Post the top 5 content opportunities with sources.\n\n2. Writing Agent (#scripts): Take the best idea from the research agent\n   and write a full script/thread/newsletter draft. Post it in #scripts.\n\n3. Thumbnail Agent (#thumbnails): Generate AI thumbnails or cover images\n   for the content. Post them in #thumbnails.\n\nHave all their work organized in different channels.\nRun this pipeline automatically every morning.\n```\n\n4. Customize for your platform:\n```text\nI focus on X/Twitter threads, not YouTube. Change the writing agent\nto produce tweet threads instead of video scripts.\n```\n\n## Key Insights\n\n- The power is in the **chained agents** — research feeds writing, writing feeds thumbnails. You don't prompt each step individually.\n- Discord channels make it easy to review each agent's work separately and give feedback like \"scripts are too long\" or \"focus more on AI news.\"\n- You can adapt this for any content format: tweets, newsletters, LinkedIn posts, podcast outlines, blog articles.\n- Running a local model for image generation (like Nano Banana on a Mac Studio) keeps costs down and gives you more control.\n\n## Based On\n\nInspired by [Alex Finn's video on life-changing OpenClaw use cases](https://www.youtube.com/watch?v=41_TNGDDnfQ).\n\n## Related Links\n\n- [OpenClaw Subagent Docs](https://github.com/openclaw/openclaw)\n- [Discord Bot Setup](https://discord.com/developers/docs)\n"},"category":"creative"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

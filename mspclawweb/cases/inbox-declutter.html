@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>收件箱整理 | MSP-龙虾应用案例</title>
+  <meta name="description" content="新闻通讯信件会像其他任何东西一样堆满收件箱。往往它们会堆积起来而根本没有被打开过。" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>生产力工具</span>
+      <span data-en>Productivity</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>收件箱整理</span>
+      <span data-en>Inbox De-clutter</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/inbox-declutter.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"收件箱整理","content":"# 收件箱整理\n\n新闻通讯信件会像其他任何东西一样堆满收件箱。往往它们会堆积起来而根本没有被打开过。\n\n## 所需技能\n[Gmail OAuth 设置](https://clawhub.ai/kai-jar/gmail-oauth)。\n\n## 设置方法\n1. [可选] 为 OpenClaw 创建一个新的 Gmail 账户。\n2. [可选] 从你的主邮箱取消订阅所有新闻通讯，然后用 OpenClaw 邮箱订阅它们。\n3. 安装该技能并确保其正常工作。\n4. 指示 OpenClaw：\n```txt\nI want you to run a cron job everyday at 8 p.m. to read all the newsletter emails of the past 24 hours and give me a digest of the most important bits along with links to read more. Then ask for my feedback on whether you picked good bits, and update your memory based on my preferences for better digests in the future jobs.\n```"},"en":{"name":"Inbox De-clutter","content":"# Inbox De-clutter\n\nNewsletters can take up the inbox like nothing else. Often times they pile-up without being opened at all. \n\n## Skills you Need\n[Gmail OAuth Setup](https://clawhub.ai/kai-jar/gmail-oauth).\n\n## How to Set it Up\n1. [optional] Create a new gmail specifically for OpenClaw.\n2. [optional] Unsubscribe from all newsletters from your main email and subscribe to them using the OpenClaw email.\n3. Install the skill and make sure it works. \n4. Instruct OpenClaw:\n```txt\nI want you to run a cron job everyday at 8 p.m. to read all the newsletter emails of the past 24 hours and give me a digest of the most important bits along with links to read more. Then ask for my feedback on whether you picked good bits, and update your memory based on my preferences for better digests in the future jobs.\n```"},"category":"productivity"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Todoist 任务管理器：智能体任务可见性 | MSP-龙虾应用案例</title>
+  <meta name="description" content="通过将内部推理和进度日志直接同步到 Todoist，最大化长时间运行的智能体工作流的透明度。" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>生产力工具</span>
+      <span data-en>Productivity</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>Todoist 任务管理器：智能体任务可见性</span>
+      <span data-en>Todoist Task Manager: Agent Task Visibility</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/todoist-task-manager.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"Todoist 任务管理器：智能体任务可见性","content":"# Todoist 任务管理器：智能体任务可见性\n通过将内部推理和进度日志直接同步到 Todoist，最大化长时间运行的智能体工作流的透明度。\n\n## 痛点\n当智能体运行复杂的多步骤任务（如构建全栈应用或执行深度研究）时，用户往往无法跟踪智能体当前在做什么、哪些步骤已完成以及智能体可能卡在哪里。手动检查聊天日志对于后台任务来说非常繁琐。\n\n## 功能说明\n此用例使用 `todoist-task-manager` 技能来：\n1.  **可视化状态**：在特定部分（如 `🟡 进行中` 或 `🟠 等待中`）创建任务。\n2.  **外化推理**：将智能体的内部\"计划\"发布到任务描述中。\n3.  **流式日志**：实时将子步骤完成情况作为注释添加到任务中。\n4.  **自动协调**：心跳脚本检查停滞的任务并通知用户。\n\n## 所需技能\n您不需要预构建的技能。只需提示您的 OpenClaw 智能体创建下面**设置指南**中描述的 bash 脚本。由于 OpenClaw 可以管理自己的文件系统并执行 shell 命令，它将在您的请求时有效地为您\"构建\"该技能。\n\n## 详细设置指南\n\n### 1. 配置 Todoist\n创建一个项目（例如\"OpenClaw 工作区\"）并获取其 ID。为不同的状态创建部分：\n- `🟡 进行中`\n- `🟠 等待中`\n- `🟢 已完成`\n\n### 2. 实现：向导构建的技能\n您可以要求 OpenClaw 为您创建这些脚本，而不是安装技能。每个脚本处理与 Todoist API 通信的不同部分。\n\n**`scripts/todoist_api.sh`**（核心包装器）：\n```bash\n#!/bin/bash\n# Usage: ./todoist_api.sh <endpoint> <method> [data_json]\nENDPOINT=$1\nMETHOD=$2\nDATA=$3\nTOKEN=\"YOUR_TODOIST_API_TOKEN\"\n\nif [ -z \"$DATA\" ]; then\n  curl -s -X \"$METHOD\" \"https://api.todoist.com/rest/v2/$ENDPOINT\" \\\n    -H \"Authorization: Bearer $TOKEN\"\nelse\n  curl -s -X \"$METHOD\" \"https://api.todoist.com/rest/v2/$ENDPOINT\" \\\n    -H \"Authorization: Bearer $TOKEN\" \\\n    -H \"Content-Type: application/json\" \\\n    -d \"$DATA\"\nfi\n```\n\n**`scripts/sync_task.sh`**（任务和状态管理）：\n```bash\n#!/bin/bash\n# Usage: ./sync_task.sh <task_content> <status> [task_id] [description] [labels_json_array]\nCONTENT=$1\nSTATUS=$2\nTASK_ID=$3\nDESCRIPTION=$4\nLABELS=$5\nPROJECT_ID=\"YOUR_PROJECT_ID\"\n\ncase $STATUS in\n  \"In Progress\") SECTION_ID=\"SECTION_ID_PROGRESS\" ;;\n  \"Waiting\")     SECTION_ID=\"SECTION_ID_WAITING\" ;;\n  \"Done\")        SECTION_ID=\"SECTION_ID_DONE\" ;;\n  *)             SECTION_ID=\"\" ;;\nesac\n\nPAYLOAD=\"{\\\"content\\\": \\\"$CONTENT\\\"\"\n[ -n \"$SECTION_ID\" ] && PAYLOAD=\"$PAYLOAD, \\\"section_id\\\": \\\"$SECTION_ID\\\"\"\n[ -n \"$PROJECT_ID\" ] && [ -z \"$TASK_ID\" ] && PAYLOAD=\"$PAYLOAD, \\\"project_id\\\": \\\"$PROJECT_ID\\\"\"\nif [ -n \"$DESCRIPTION\" ]; then\n  ESC_DESC=$(echo \"$DESCRIPTION\" | sed ':a;N;$!ba;s/\\n/\\\\n/g' | sed 's/\"/\\\\\"/g')\n  PAYLOAD=\"$PAYLOAD, \\\"description\\\": \\\"$ESC_DESC\\\"\"\nfi\n[ -n \"$LABELS\" ] && PAYLOAD=\"$PAYLOAD, \\\"labels\\\": $LABELS\"\nPAYLOAD=\"$PAYLOAD}\"\n\nif [ -n \"$TASK_ID\" ]; then\n  ./scripts/todoist_api.sh \"tasks/$TASK_ID\" POST \"$PAYLOAD\"\nelse\n  ./scripts/todoist_api.sh \"tasks\" POST \"$PAYLOAD\"\nfi\n```\n\n**`scripts/add_comment.sh`**（进度日志）：\n```bash\n#!/bin/bash\n# Usage: ./add_comment.sh <task_id> <comment_text>\nTASK_ID=$1\nTEXT=$2\nESC_TEXT=$(echo \"$TEXT\" | sed ':a;N;$!ba;s/\\n/\\\\n/g' | sed 's/\"/\\\\\"/g')\nPAYLOAD=\"{\\\"task_id\\\": \\\"$TASK_ID\\\", \\\"content\\\": \\\"$ESC_TEXT\\\"}\"\n./scripts/todoist_api.sh \"comments\" POST \"$PAYLOAD\"\n```\n\n### 3. 使用提示\n您可以向您的智能体提供此提示来**设置**和**使用**可见性系统：\n\n```text\n我希望您为自己的运行构建一个基于 Todoist 的任务可见性系统。\n\n首先，在 'scripts/' 文件夹中创建三个 bash 脚本：\n1. todoist_api.sh（Todoist REST API 的 curl 包装器）\n2. sync_task.sh（创建或更新具有特定 section_ids 的任务，用于进行中、等待中和已完成）\n3. add_comment.sh（将进度日志作为注释发布）\n\n使用这些变量进行设置：\n- Token：[您的 Todoist API 令牌]\n- 项目 ID：[您的项目 ID]\n- 部分 ID：[进行中 ID、等待中 ID、已完成 ID]\n\n创建后，对于我给您的每个复杂任务：\n1. 在\"进行中\"中创建任务，在描述中包含您的完整计划。\n2. 对于每个子步骤完成，用日志调用 add_comment.sh 说明您所做的工作。\n3. 完成后将任务移至\"已完成\"。\n```\n\n## 相关链接\n- [Todoist REST API 文档](https://developer.todoist.com/rest/v2/)"},"en":{"name":"Todoist Task Manager: Agent Task Visibility","content":"# Todoist Task Manager: Agent Task Visibility\nMaximize transparency for long-running agentic workflows by syncing internal reasoning and progress logs directly to Todoist.\n\n## Pain Point\nWhen agents run complex, multi-step tasks (like building a full-stack app or performing deep research), the user often loses track of what the agent is currently doing, what steps have been completed, and where the agent might be stuck. Checking chat logs manually is tedious for background tasks.\n\n## What It Does\nThis use case uses the `todoist-task-manager` skill to:\n1.  **Visualize State**: Create tasks in specific sections like `🟡 In Progress` or `🟠 Waiting`.\n2.  **Externalize Reasoning**: Post the agent's internal \"Plan\" into the task description.\n3.  **Stream Logs**: Add sub-step completions as comments to the task in real-time.\n4.  **Auto-Reconcile**: A heartbeat script checks for stalled tasks and notifies the user.\n\n## Skills you Need\nYou don't need a pre-built skill. Simply prompt your OpenClaw agent to create the bash scripts described in the **Setup Guide** below. Since OpenClaw can manage its own filesystem and execute shell commands, it will effectively \"build\" the skill for you upon request.\n\n## Detailed Setup Guide\n\n### 1. Configure Todoist\nCreate a project (e.g., \"OpenClaw Workspace\") and get its ID. Create sections for different states:\n- `🟡 In Progress`\n- `🟠 Waiting`\n- `🟢 Done`\n\n### 2. Implementation: The \"Agent-Built\" Skill\nInstead of installing a skill, you can ask OpenClaw to create these scripts for you. Each script handles a different part of the communication with the Todoist API.\n\n**`scripts/todoist_api.sh`** (The Core Wrapper):\n```bash\n#!/bin/bash\n# Usage: ./todoist_api.sh <endpoint> <method> [data_json]\nENDPOINT=$1\nMETHOD=$2\nDATA=$3\nTOKEN=\"YOUR_TODOIST_API_TOKEN\"\n\nif [ -z \"$DATA\" ]; then\n  curl -s -X \"$METHOD\" \"https://api.todoist.com/rest/v2/$ENDPOINT\" \\\n    -H \"Authorization: Bearer $TOKEN\"\nelse\n  curl -s -X \"$METHOD\" \"https://api.todoist.com/rest/v2/$ENDPOINT\" \\\n    -H \"Authorization: Bearer $TOKEN\" \\\n    -H \"Content-Type: application/json\" \\\n    -d \"$DATA\"\nfi\n```\n\n**`scripts/sync_task.sh`** (Task & Status Management):\n```bash\n#!/bin/bash\n# Usage: ./sync_task.sh <task_content> <status> [task_id] [description] [labels_json_array]\nCONTENT=$1\nSTATUS=$2\nTASK_ID=$3\nDESCRIPTION=$4\nLABELS=$5\nPROJECT_ID=\"YOUR_PROJECT_ID\"\n\ncase $STATUS in\n  \"In Progress\") SECTION_ID=\"SECTION_ID_PROGRESS\" ;;\n  \"Waiting\")     SECTION_ID=\"SECTION_ID_WAITING\" ;;\n  \"Done\")        SECTION_ID=\"SECTION_ID_DONE\" ;;\n  *)             SECTION_ID=\"\" ;;\nesac\n\nPAYLOAD=\"{\\\"content\\\": \\\"$CONTENT\\\"\"\n[ -n \"$SECTION_ID\" ] && PAYLOAD=\"$PAYLOAD, \\\"section_id\\\": \\\"$SECTION_ID\\\"\"\n[ -n \"$PROJECT_ID\" ] && [ -z \"$TASK_ID\" ] && PAYLOAD=\"$PAYLOAD, \\\"project_id\\\": \\\"$PROJECT_ID\\\"\"\nif [ -n \"$DESCRIPTION\" ]; then\n  ESC_DESC=$(echo \"$DESCRIPTION\" | sed ':a;N;$!ba;s/\\n/\\\\n/g' | sed 's/\"/\\\\\"/g')\n  PAYLOAD=\"$PAYLOAD, \\\"description\\\": \\\"$ESC_DESC\\\"\"\nfi\n[ -n \"$LABELS\" ] && PAYLOAD=\"$PAYLOAD, \\\"labels\\\": $LABELS\"\nPAYLOAD=\"$PAYLOAD}\"\n\nif [ -n \"$TASK_ID\" ]; then\n  ./scripts/todoist_api.sh \"tasks/$TASK_ID\" POST \"$PAYLOAD\"\nelse\n  ./scripts/todoist_api.sh \"tasks\" POST \"$PAYLOAD\"\nfi\n```\n\n**`scripts/add_comment.sh`** (Progress Logging):\n```bash\n#!/bin/bash\n# Usage: ./add_comment.sh <task_id> <comment_text>\nTASK_ID=$1\nTEXT=$2\nESC_TEXT=$(echo \"$TEXT\" | sed ':a;N;$!ba;s/\\n/\\\\n/g' | sed 's/\"/\\\\\"/g')\nPAYLOAD=\"{\\\"task_id\\\": \\\"$TASK_ID\\\", \\\"content\\\": \\\"$ESC_TEXT\\\"}\"\n./scripts/todoist_api.sh \"comments\" POST \"$PAYLOAD\"\n```\n\n### 3. Usage Prompt\nYou can give this prompt to your agent to both **setup** and **use** the visibility system:\n\n```text\nI want you to build a Todoist-based task visibility system for your own runs. \n\nFirst, create three bash scripts in a 'scripts/' folder: \n1. todoist_api.sh (a curl wrapper for Todoist REST API)\n2. sync_task.sh (to create or update tasks with specific section_ids for In Progress, Waiting, and Done)\n3. add_comment.sh (to post progress logs as comments)\n\nUse these variables for the setup:\n- Token: [Your Todoist API Token]\n- Project ID: [Your Project ID]\n- Section IDs: [In Progress ID, Waiting ID, Done ID]\n\nOnce created, for every complex task I give you:\n1. Create a task in 'In Progress' with your full PLAN in the description.\n2. For every sub-step completion, call add_comment.sh with a log of what you did.\n3. Move the task to 'Done' when finished.\n```\n\n## Related Links\n- [Todoist REST API Documentation](https://developer.todoist.com/rest/v2/)\n\n"},"category":"productivity"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

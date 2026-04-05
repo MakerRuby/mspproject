@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>市场调研与产品工厂 | MSP-龙虾应用案例</title>
+  <meta name="description" content="你想构建一个产品，但不知道应该构建什么。或者你已经有了一个业务，需要了解客户正在为哪些问题而困扰。这个工作流使用 Last 30 Days 技能在 Reddit 和 X 上挖掘真实的痛点，然后让 OpenClaw 构建解决这些问题的方案。" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>研究与学习</span>
+      <span data-en>Research & Learning</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>市场调研与产品工厂</span>
+      <span data-en>Market Research & Product Factory</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/market-research-product-factory.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"市场调研与产品工厂","content":"# 市场调研与产品工厂\n\n你想构建一个产品，但不知道应该构建什么。或者你已经有了一个业务，需要了解客户正在为哪些问题而困扰。这个工作流使用 Last 30 Days 技能在 Reddit 和 X 上挖掘真实的痛点，然后让 OpenClaw 构建解决这些问题的方案。\n\n## 工作原理\n\n- 使用 [Last 30 Days](https://github.com/mvanhorn/last30days-skill/) 技能在过去 30 天内研究 Reddit 和 X 上的任何话题\n- 发现人们发布的真实挑战、抱怨和功能请求\n- 帮助你从用户的真实痛点中识别产品机会\n- 更进一步：要求 OpenClaw 构建一个解决其中一个挑战的 MVP\n- 创建一个完整的研究到产品的管道，完全无需你编写代码\n\n## 痛点\n\n大多数有志创业者都在苦恼于\"构建什么\"的问题。传统的市场调研意味着花费数小时手动浏览论坛、社交媒体和评价网站。这个工作流自动化了整个发现到原型的流程。\n\n## 所需技能\n\n- Matt Van Horde 的 [Last 30 Days](https://github.com/mvanhorn/last30days-skill/) 技能\n- Telegram 或 Discord 集成以接收研究报告\n\n## 设置方法\n\n1. 安装 Last 30 Days 技能：\n```text\nInstall this skill: https://github.com/mvanhorn/last30days-skill/\n```\n\n2. 对任何话题进行调研：\n```text\nPlease use the Last 30 Days skill to research challenges people are\nhaving with [your topic here].\n\nOrganize the findings into:\n- Top pain points (ranked by frequency)\n- Specific complaints and feature requests\n- Gaps in existing solutions\n- Opportunities for a new product\n```\n\n3. 挑选一个痛点，让 OpenClaw 构建解决方案：\n```text\nBuild me an MVP that solves [pain point from research].\nKeep it simple — just the core functionality.\nShip it as a web app I can share with people.\n```\n\n4. 对于持续的市场情报，安排定期调研：\n```text\nEvery Monday morning, use the Last 30 Days skill to research what\npeople are saying about [your niche] on Reddit and X. Summarize the\ntop opportunities and send them to my Telegram.\n```\n\n## 真实案例\n\n```text\n\"Use the Last 30 Days skill to research challenges people are having with OpenClaw.\"\n\nResults:\n- Setup difficulty: Many users struggle with initial configuration\n- Skill discovery: People can't find skills that do what they need\n- Cost concerns: Users want cheaper model alternatives\n\n→ \"Build me a simple web app that makes OpenClaw setup easier with a guided wizard.\"\n\nOpenClaw builds the app. You ship it. You have a product.\n```\n\n## 关键洞察\n\n- 这是**自动化创业**：发现问题 → 验证需求 → 构建解决方案，所有这一切都通过文本消息完成。\n- Last 30 Days 技能为你提供真实、未经过滤的用户观点 —— 而不是经过包装的调查数据。\n- 你不需要是技术专家。OpenClaw 可以进行调研和构建。\n- 安排每周的调研以保持对市场中不断变化的痛点的掌握。\n\n## 灵感来源\n\n受 [Alex Finn 关于改变人生的 OpenClaw 用例的视频](https://www.youtube.com/watch?v=41_TNGDDnfQ) 和 Matt Van Horde 的 [Last 30 Days 技能](https://github.com/mvanhorn/last30days-skill/)启发。\n\n## 相关链接\n\n- [Last 30 Days 技能](https://github.com/mvanhorn/last30days-skill/)\n- [OpenClaw 技能库](https://github.com/openclaw/skills)"},"en":{"name":"Market Research & Product Factory","content":"# Market Research & Product Factory\n\nYou want to build a product but don't know what to build. Or you have a business and need to understand what your customers are struggling with. This workflow uses the Last 30 Days skill to mine Reddit and X for real pain points, then has OpenClaw build solutions to those problems.\n\n## What It Does\n\n- Researches any topic across Reddit and X over the last 30 days using the [Last 30 Days](https://github.com/mvanhorn/last30days-skill/) skill\n- Surfaces real challenges, complaints, and feature requests people are posting about\n- Helps you identify product opportunities from genuine user pain points\n- Takes it a step further: ask OpenClaw to build an MVP that solves one of those challenges\n- Creates a full research-to-product pipeline with zero coding on your part\n\n## Pain Point\n\nMost aspiring entrepreneurs struggle with the \"what to build\" problem. Market research traditionally means hours of manual browsing through forums, social media, and review sites. This automates the entire discovery-to-prototype pipeline.\n\n## Skills You Need\n\n- [Last 30 Days](https://github.com/mvanhorn/last30days-skill/) skill by Matt Van Horde\n- Telegram or Discord integration for receiving research reports\n\n## How to Set It Up\n\n1. Install the Last 30 Days skill:\n```text\nInstall this skill: https://github.com/mvanhorn/last30days-skill/\n```\n\n2. Run research on any topic:\n```text\nPlease use the Last 30 Days skill to research challenges people are\nhaving with [your topic here].\n\nOrganize the findings into:\n- Top pain points (ranked by frequency)\n- Specific complaints and feature requests\n- Gaps in existing solutions\n- Opportunities for a new product\n```\n\n3. Pick a pain point and have OpenClaw build a solution:\n```text\nBuild me an MVP that solves [pain point from research].\nKeep it simple — just the core functionality.\nShip it as a web app I can share with people.\n```\n\n4. For ongoing market intelligence, schedule regular research:\n```text\nEvery Monday morning, use the Last 30 Days skill to research what\npeople are saying about [your niche] on Reddit and X. Summarize the\ntop opportunities and send them to my Telegram.\n```\n\n## Real World Example\n\n```text\n\"Use the Last 30 Days skill to research challenges people are having with OpenClaw.\"\n\nResults:\n- Setup difficulty: Many users struggle with initial configuration\n- Skill discovery: People can't find skills that do what they need\n- Cost concerns: Users want cheaper model alternatives\n\n→ \"Build me a simple web app that makes OpenClaw setup easier with a guided wizard.\"\n\nOpenClaw builds the app. You ship it. You have a product.\n```\n\n## Key Insights\n\n- This is **entrepreneurship on autopilot**: find problems → validate demand → build solutions, all through text messages.\n- The Last 30 Days skill gives you real, unfiltered user sentiment — not sanitized survey data.\n- You don't need to be technical. OpenClaw does the research AND the building.\n- Schedule weekly research to stay on top of evolving pain points in your market.\n\n## Based On\n\nInspired by [Alex Finn's video on life-changing OpenClaw use cases](https://www.youtube.com/watch?v=41_TNGDDnfQ) and the [Last 30 Days skill](https://github.com/mvanhorn/last30days-skill/) by Matt Van Horde.\n\n## Related Links\n\n- [Last 30 Days Skill](https://github.com/mvanhorn/last30days-skill/)\n- [OpenClaw Skills Directory](https://github.com/openclaw/skills)\n"},"category":"research"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

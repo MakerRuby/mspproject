@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>多渠道 AI 客户服务平台 | MSP-龙虾应用案例</title>
+  <meta name="description" content="小企业需要在 WhatsApp、Instagram 私信、电子邮件和 Google 评价等多个应用中处理客户沟通。客户期望获得 24/7 的即时回应，但雇用全天候的员工成本高昂。" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>生产力工具</span>
+      <span data-en>Productivity</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>多渠道 AI 客户服务平台</span>
+      <span data-en>Multi-Channel AI Customer Service Platform</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/multi-channel-customer-service.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"多渠道 AI 客户服务平台","content":"# 多渠道 AI 客户服务平台\n\n小企业需要在 WhatsApp、Instagram 私信、电子邮件和 Google 评价等多个应用中处理客户沟通。客户期望获得 24/7 的即时回应，但雇用全天候的员工成本高昂。\n\n这个用例将所有客户接触点整合到一个由 AI 驱动的统一收件箱中，代表您进行智能回复。\n\n## 功能特点\n\n- **统一收件箱**：WhatsApp Business、Instagram 私信、Gmail 和 Google 评价集中管理\n- **AI 自动回复**：自动处理常见问题、预约请求和常见咨询\n- **人工接管**：将复杂问题升级或标记为待审核\n- **测试模式**：在不影响真实客户的情况下向客户演示系统\n- **业务背景**：基于您的服务、定价和政策进行训练\n\n## 真实业务案例\n\n在 Futurist Systems，我们为本地服务企业（餐厅、诊所、沙龙）部署此解决方案。一家餐厅将平均响应时间从 4 小时以上缩短到 2 分钟以内，自动处理了 80% 的咨询。\n\n## 所需技能\n\n- WhatsApp Business API 集成\n- Instagram Graph API（通过 Meta Business）\n- `gog` CLI for Gmail\n- Google Business Profile API for reviews\n- AGENTS.md 中的消息路由逻辑\n\n## 设置步骤\n\n1. **通过 OpenClaw 配置连接渠道**：\n   - WhatsApp Business API（通过 360dialog 或官方 API）\n   - Instagram（通过 Meta Business Suite）\n   - Gmail（通过 `gog` OAuth）\n   - Google Business Profile API 令牌\n\n2. **创建业务知识库**：\n   - 服务和定价\n   - 营业时间和地址\n   - 常见问题解答\n   - 升级触发条件（例如投诉、退款请求）\n\n3. **在 AGENTS.md 中配置路由逻辑**：\n\n```text\n## 客户服务模式\n\n接收客户消息时：\n\n1. 识别渠道（WhatsApp/Instagram/Email/Review）\n2. 检查该客户是否启用了测试模式\n3. 分类意图：\n   - 常见问题 → 从知识库响应\n   - 预约 → 检查可用性，确认预订\n   - 投诉 → 标记为人工审核，确认收到\n   - 评价 → 感谢反馈，解决顾虑\n\n回复风格：\n- 友好、专业、简洁\n- 匹配客户的语言（ES/EN/UA）\n- 切勿编造知识库中没有的信息\n- 以企业名称署名\n\n测试模式：\n- 在回复前加上 [TEST] 前缀\n- 记录日志但不发送到真实渠道\n```\n\n4. **设置心跳检查**以监控响应：\n\n```text\n## 心跳检查：客户服务检查\n\n每 30 分钟：\n- 检查超过 5 分钟未回复的消息\n- 如果响应队列积压则发出警报\n- 记录每日响应指标\n```\n\n## 关键要点\n\n- **语言检测很重要**：自动检测并用客户的语言回复\n- **测试模式至关重要**：客户需要先看到系统运行效果再上线\n- **接管规则**：定义清晰的升级触发条件，避免 AI 过度处理\n- **回复模板**：为敏感话题（退款、投诉）准备预先审批的模板\n\n## 相关链接\n\n- [WhatsApp Business API](https://developers.facebook.com/docs/whatsapp)\n- [Instagram Messaging API](https://developers.facebook.com/docs/instagram-api/guides/messaging)\n- [Google Business Profile API](https://developers.google.com/my-business)"},"en":{"name":"Multi-Channel AI Customer Service Platform","content":"# Multi-Channel AI Customer Service Platform\n\nSmall businesses juggle WhatsApp, Instagram DMs, emails, and Google Reviews across multiple apps. Customers expect instant responses 24/7, but hiring staff for round-the-clock coverage is expensive.\n\nThis use case consolidates all customer touchpoints into a single AI-powered inbox that responds intelligently on your behalf.\n\n## What It Does\n\n- **Unified inbox**: WhatsApp Business, Instagram DMs, Gmail, and Google Reviews in one place\n- **AI auto-responses**: Handles FAQs, appointment requests, and common inquiries automatically\n- **Human handoff**: Escalates complex issues or flags them for review\n- **Test mode**: Demo the system to clients without affecting real customers\n- **Business context**: Trained on your services, pricing, and policies\n\n## Real Business Example\n\nAt Futurist Systems, we deploy this for local service businesses (restaurants, clinics, salons). One restaurant reduced response time from 4+ hours to under 2 minutes, handling 80% of inquiries automatically.\n\n## Skills You Need\n\n- WhatsApp Business API integration\n- Instagram Graph API (via Meta Business)\n- `gog` CLI for Gmail\n- Google Business Profile API for reviews\n- Message routing logic in AGENTS.md\n\n## How to Set It Up\n\n1. **Connect channels** via OpenClaw config:\n   - WhatsApp Business API (through 360dialog or official API)\n   - Instagram via Meta Business Suite\n   - Gmail via `gog` OAuth\n   - Google Business Profile API token\n\n2. **Create business knowledge base**:\n   - Services and pricing\n   - Business hours and location\n   - FAQ responses\n   - Escalation triggers (e.g., complaints, refund requests)\n\n3. **Configure AGENTS.md** with routing logic:\n\n```text\n## Customer Service Mode\n\nWhen receiving customer messages:\n\n1. Identify channel (WhatsApp/Instagram/Email/Review)\n2. Check if test mode is enabled for this client\n3. Classify intent:\n   - FAQ → respond from knowledge base\n   - Appointment → check availability, confirm booking\n   - Complaint → flag for human review, acknowledge receipt\n   - Review → thank for feedback, address concerns\n\nResponse style:\n- Friendly, professional, concise\n- Match the customer's language (ES/EN/UA)\n- Never invent information not in knowledge base\n- Sign off with business name\n\nTest mode:\n- Prefix responses with [TEST]\n- Log but don't send to real channels\n```\n\n4. **Set up heartbeat checks** for response monitoring:\n\n```text\n## Heartbeat: Customer Service Check\n\nEvery 30 minutes:\n- Check for unanswered messages > 5 min old\n- Alert if response queue is backing up\n- Log daily response metrics\n```\n\n## Key Insights\n\n- **Language detection matters**: Auto-detect and respond in customer's language\n- **Test mode is essential**: Clients need to see it work before going live\n- **Handoff rules**: Define clear escalation triggers to avoid AI overreach\n- **Response templates**: Pre-approved templates for sensitive topics (refunds, complaints)\n\n## Related Links\n\n- [WhatsApp Business API](https://developers.facebook.com/docs/whatsapp)\n- [Instagram Messaging API](https://developers.facebook.com/docs/instagram-api/guides/messaging)\n- [Google Business Profile API](https://developers.google.com/my-business)\n"},"category":"productivity"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

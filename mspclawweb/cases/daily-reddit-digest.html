@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>每日 Reddit 精选摘要 | MSP-龙虾应用案例</title>
+  <meta name="description" content="每天运行一次精选摘要，为你提供最受欢迎的 subreddit 帖子。" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>社交媒体</span>
+      <span data-en>Social Media</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>每日 Reddit 精选摘要</span>
+      <span data-en>Daily Reddit Digest</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/daily-reddit-digest.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"每日 Reddit 精选摘要","content":"# 每日 Reddit 精选摘要\n每天运行一次精选摘要，为你提供最受欢迎的 subreddit 帖子。\n\n用途：\n\n• 浏览 subreddit（热门/最新/热评帖子）\n• 按主题搜索帖子\n• 拉取评论线程以获取上下文\n• 构建帖子候选列表以供稍后手动审查/回复\n\n> 这是只读的。无法发帖、投票或评论。\n\n## 所需技能\n[reddit-readonly](https://clawhub.ai/buksan1950/reddit-readonly) skill。无需身份验证。\n\n## 设置方法\n安装该 skill 后，向 OpenClaw 输入以下提示：\n```text\nI want you to give me the top performing posts from the following subreddits.\n<paste the list here>\nCreate a separate memory for the reddit processes, about the type of posts I like to see and every day ask me if I liked the list you provided. Save my preference as rules in the memory to use for a better digest curation. (e.g. do not include memes.)\nEvery day at 5pm, run this process and give me the digest.\n```"},"en":{"name":"Daily Reddit Digest","content":"# Daily Reddit Digest\nRun a daily digest everyday to give you the top performing posts from your favourite subreddits.\n\nWhat to use it for:\n\n• Browsing subreddits (hot/new/top posts)\n• Searching posts by topic\n• Pulling comment threads for context\n• Building shortlists of posts to manually review/reply to later\n\n> It's read-only. No posting, voting, or commenting.\n\n## Skills you Need\n[reddit-readonly](https://clawhub.ai/buksan1950/reddit-readonly) skill. It doesn't need auth. \n\n## How to Set it Up\nAfter installing the skill, prompt your OpenClaw:\n```text\nI want you to give me the top performing posts from the following subreddits.\n<paste the list here>\nCreate a separate memory for the reddit processes, about the type of posts I like to see and every day ask me if I liked the list you provided. Save my preference as rules in the memory to use for a better digest curation. (e.g. do not include memes.)\nEvery day at 5pm, run this process and give me the digest.\n```"},"category":"social-media"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

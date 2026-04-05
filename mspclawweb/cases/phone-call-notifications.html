@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>电话来电通知 | MSP-龙虾应用案例</title>
+  <meta name="description" content="您的智能体已经为您监控各种事务——股票、电子邮件、智能家居、日历——但通知很容易被忽视。推送通知堆积如山。聊天消息被埋没。对于真正重要的事情，您需要一个无法轻易忽视的通知方式。" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>生产力工具</span>
+      <span data-en>Productivity</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>电话来电通知</span>
+      <span data-en>Phone Call Notifications</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/phone-call-notifications.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"电话来电通知","content":"# 电话来电通知\n\n您的智能体已经为您监控各种事务——股票、电子邮件、智能家居、日历——但通知很容易被忽视。推送通知堆积如山。聊天消息被埋没。对于真正重要的事情，您需要一个无法轻易忽视的通知方式。\n\n这个用例为您的智能体提供了电话这一通知渠道。当某些事情足够紧急时，智能体会拨打您的真实电话号码，告诉您发生了什么，您可以实时对话。这是双向对话，而不是机器人电话。\n\n## 工作原理\n\n- 智能体判断某件事值得您关注（价格提醒、紧急邮件、约会提醒，任何事情）\n- 智能体通过 [clawr.ing](https://clawr.ing) 这一托管通话服务给您的电话拨打电话——无需设置 Twilio，无需配置 API 密钥\n- 您接起电话，听到提醒内容，可以实时提出后续问题\n- 对话结束后通话终止\n\n核心理念：智能体主动给您打电话。您不需要主动给智能体拨号。这适用于心跳检查、定时任务或任何触发器——智能体评估某件事是否值得打电话通知，然后相应采取行动。\n\n## 为什么这种方法有效\n\nOpenClaw 智能体已经具备主动性——心跳、定时任务、事件触发。但其输出渠道仅限于您可能不会经常检查的聊天平台。电话通话是唯一一种能可靠地引起您注意的通知渠道，特别是当您离开办公桌时。\n\nclawr.ing 处理电话基础设施。您只需粘贴一个设置提示词，智能体就具备了拨打电话的能力。无需 Twilio 账户，无需电话号码配置，无需 webhook 设置。该服务覆盖 100 多个国家，提供真实的 PSTN 通话（不是 VoIP 覆盖层）。\n\n## 所需技能\n\n- [clawr.ing](https://clawhub.ai/marcospgp/clawring) —— 通过将 [clawr.ing 仪表板](https://clawr.ing)中的设置提示词粘贴到您的 OpenClaw 聊天中来安装。无需 CLI 安装。\n\n仅此而已。没有其他依赖项。设置提示词包含 API 密钥和技能文档链接——智能体会读取这些信息并自行处理其余部分。\n\n## 示例：早间简报来电\n\n设置一个定时任务，每天早上给您打来电话提供个性化简报：\n\n```\nEvery weekday at 7:30 AM, call me with a morning briefing. Include:\n- Weather forecast for my city\n- My calendar for today\n- Any urgent emails that came in overnight\n- Top 3 news headlines relevant to my interests\n\nKeep it concise — aim for under 2 minutes. If I ask questions, answer them.\nIf I don't pick up, don't retry.\n```\n\n## 示例：价格提醒\n\n告诉智能体要监控什么以及何时拨打电话：\n\n```\nMonitor NVDA stock price. If it drops more than 5% in a single day,\ncall me immediately and tell me what happened. Include any relevant\nnews that might explain the drop.\n```\n\n## 示例：紧急邮件过滤\n\n```\nDuring business hours, check my inbox every 15 minutes.\nIf you see an email from my boss or any email marked urgent,\ncall me with a summary. For everything else, just send a chat message.\n```\n\n## 关键见解\n\n- **不要过度使用。** 电话的意义在于\"这确实很重要\"。如果您的智能体每天给您打 10 次电话，您最终会开始忽视它。为什么值得打电话和什么只需聊天消息设定明确的阈值。\n- **与心跳或定时任务配对。** clawr.ing 是传递渠道——您仍需要一个触发器。心跳检查（每 30 分钟）适合监控任务。定时任务适合安排简报。\n- **双向对话。** 与推送通知不同，您可以在通话中提出后续问题。\"等等，是哪封邮件？\"或\"现在的价格是多少？\"——智能体实时响应。\n- **为通话��择快速模型。** 电话对话需要快速的响应。如果您的 OpenClaw 支持技能级别的模型路由，将 clawr.ing 分配给快速模型（Haiku 级别）。思考声覆盖了延迟，但更快总是更好。\n- **隐私。** clawr.ing 不存储录音或文字记录。音频在传输过程中是加密的，处理后会被丢弃。\n\n## 相关链接\n\n- [clawr.ing](https://clawr.ing)\n- [ClawHub 上的 clawr.ing](https://clawhub.ai/marcospgp/clawring)\n- [OpenClaw](https://github.com/openclaw/openclaw)"},"en":{"name":"Phone Call Notifications","content":"# Phone Call Notifications\n\nYour agent already monitors things for you — stocks, emails, smart home, calendars — but notifications are easy to ignore. Push notifications pile up. Chat messages get buried. For the stuff that actually matters, you need something you can't swipe away.\n\nThis use case gives your agent a phone call as a notification channel. When something is urgent enough, the agent dials your real phone number, tells you what's going on, and you can talk back. Two-way conversation, not a robocall.\n\n## What It Does\n\n- Agent decides something is worth your attention (price alert, urgent email, appointment reminder, anything)\n- Agent calls your phone via [clawr.ing](https://clawr.ing), a managed calling service — no Twilio setup, no API keys to configure\n- You pick up, hear the alert, and can ask follow-up questions in real time\n- Call ends when the conversation is done\n\nThe key idea: the agent calls YOU. You don't call the agent. This works with heartbeat checks, cron jobs, or any trigger — the agent evaluates whether something is phone-call-worthy and acts on it.\n\n## Why This Works\n\nOpenClaw agents already have initiative — heartbeat, cron, event triggers. But their output channels are limited to chat platforms you might not be checking. A phone call is the one notification channel that reliably gets your attention, especially when you're away from your desk.\n\nclawr.ing handles the telephony infrastructure. You paste one setup prompt and the agent gains the ability to call. No Twilio account, no phone number provisioning, no webhook configuration. The service covers 100+ countries with real PSTN calls (not VoIP overlays).\n\n## Skills Needed\n\n- [clawr.ing](https://clawhub.ai/marcospgp/clawring) — install by pasting the setup prompt from the [clawr.ing dashboard](https://clawr.ing) into your OpenClaw chat. No CLI install needed.\n\nThat's it. No other dependencies. The setup prompt includes the API key and links to skill docs — the agent reads them and figures out the rest.\n\n## Example: Morning Briefing Call\n\nSet up a cron job that calls you every morning with a personalized briefing:\n\n```\nEvery weekday at 7:30 AM, call me with a morning briefing. Include:\n- Weather forecast for my city\n- My calendar for today\n- Any urgent emails that came in overnight\n- Top 3 news headlines relevant to my interests\n\nKeep it concise — aim for under 2 minutes. If I ask questions, answer them.\nIf I don't pick up, don't retry.\n```\n\n## Example: Price Alert\n\nTell the agent what to watch and when to call:\n\n```\nMonitor NVDA stock price. If it drops more than 5% in a single day,\ncall me immediately and tell me what happened. Include any relevant\nnews that might explain the drop.\n```\n\n## Example: Urgent Email Filter\n\n```\nDuring business hours, check my inbox every 15 minutes.\nIf you see an email from my boss or any email marked urgent,\ncall me with a summary. For everything else, just send a chat message.\n```\n\n## Key Insights\n\n- **Don't overuse it.** The whole point is that a phone call means \"this actually matters.\" If your agent calls you 10 times a day, you'll start ignoring it. Set clear thresholds for what's call-worthy vs chat-worthy.\n- **Pair with heartbeat or cron.** clawr.ing is the delivery channel — you still need a trigger. Heartbeat checks (every 30 min) work for monitoring tasks. Cron jobs work for scheduled briefings.\n- **Two-way conversation.** Unlike a push notification, you can ask follow-up questions on the call. \"Wait, which email?\" or \"What's the current price now?\" — the agent responds in real time.\n- **Fast model for calls.** Phone conversations need quick responses. If your OpenClaw supports skill-level model routing, assign clawr.ing to a fast model (Haiku-class). The thinking sound covers latency, but faster is always better.\n- **Privacy.** clawr.ing doesn't store recordings or transcripts. Audio is encrypted in transit and discarded after processing.\n\n## Related Links\n\n- [clawr.ing](https://clawr.ing)\n- [clawr.ing on ClawHub](https://clawhub.ai/marcospgp/clawring)\n- [OpenClaw](https://github.com/openclaw/openclaw)\n"},"category":"productivity"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

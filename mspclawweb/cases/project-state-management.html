@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>项目状态管理系统：事件驱动的看板替代方案 | MSP-龙虾应用案例</title>
+  <meta name="description" content="传统的看板是静态的，需要手动更新。你忘记移动卡片、丢失会话之间的上下文，无法追踪状态变化的&quot;原因&quot;。项目会在缺乏清晰可见性的情况下漂移。" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>生产力工具</span>
+      <span data-en>Productivity</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>项目状态管理系统：事件驱动的看板替代方案</span>
+      <span data-en>Project State Management System: Event-Driven Alternative to</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/project-state-management.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"项目状态管理系统：事件驱动的看板替代方案","content":"# 项目状态管理系统：事件驱动的看板替代方案\n\n传统的看板是静态的，需要手动更新。你忘记移动卡片、丢失会话之间的上下文，无法追踪状态变化的\"原因\"。项目会在缺乏清晰可见性的情况下漂移。\n\n这个工作流用事件驱动系统替代看板，自动跟踪项目状态：\n\n• 在数据库中存储项目状态及完整历史记录\n• 捕获上下文：决策、阻碍因素、后续步骤、关键见解\n• 事件驱动更新：\"刚完成 X，卡在 Y\"→ 自动状态转换\n• 自然语言查询：\"[项目]的状态是什么？\"、\"我们为什么要转向[功能]？\"\n• 每日站会总结：昨天发生了什么、今天计划了什么、什么被阻碍\n• Git 集成：将提交链接到项目事件以实现可追溯性\n\n## 痛点\n\n看板会变得过时。你浪费时间更新卡片而不是做实际工作。上下文会丢失——三个月后，你无法记起为什么做了某个关键决策。代码变更和项目进度之间没有自动链接。\n\n## 它的功能\n\n与其拖动卡片，你可以与助手聊天：\"完成了身份验证流程，开始做仪表板。\"系统记录事件、更新项目状态并保留上下文。当你问\"我们在仪表板上进展到哪了？\"时，它会给你完整的故事：完成了什么、接下来是什么、什么阻碍了你以及原因。\n\nGit 提交会自动扫描并链接到项目。你的每日站会总结会自动生成。\n\n## 所需技能\n\n- `postgres` 或 SQLite 用于项目状态数据库\n- `github`（gh CLI）用于提交追踪\n- Discord 或 Telegram 用于更新和查询\n- Cron 任务用于每日总结\n- 子代理用于并行项目分析\n\n## 设置方法\n\n1. 设置项目状态数据库：\n```sql\nCREATE TABLE projects (\n  id SERIAL PRIMARY KEY,\n  name TEXT UNIQUE,\n  status TEXT, -- e.g., \"active\", \"blocked\", \"completed\"\n  current_phase TEXT,\n  last_update TIMESTAMPTZ DEFAULT NOW()\n);\n\nCREATE TABLE events (\n  id SERIAL PRIMARY KEY,\n  project_id INTEGER REFERENCES projects(id),\n  event_type TEXT, -- e.g., \"progress\", \"blocker\", \"decision\", \"pivot\"\n  description TEXT,\n  context TEXT,\n  timestamp TIMESTAMPTZ DEFAULT NOW()\n);\n\nCREATE TABLE blockers (\n  id SERIAL PRIMARY KEY,\n  project_id INTEGER REFERENCES projects(id),\n  blocker_text TEXT,\n  status TEXT DEFAULT 'open', -- \"open\", \"resolved\"\n  created_at TIMESTAMPTZ DEFAULT NOW(),\n  resolved_at TIMESTAMPTZ\n);\n```\n\n2. 为项目更新创建一个 Discord 频道（例如，#project-state）。\n\n3. 提示 OpenClaw：\n```text\nYou are my project state manager. Instead of Kanban, I'll tell you what I'm working on conversationally.\n\nWhen I say things like:\n- \"Finished [task]\" → log a \"progress\" event, update project state\n- \"Blocked on [issue]\" → create a blocker entry, update project status to \"blocked\"\n- \"Starting [new task]\" → log a \"progress\" event, update current phase\n- \"Decided to [decision]\" → log a \"decision\" event with full context\n- \"Pivoting to [new approach]\" → log a \"pivot\" event with reasoning\n\nWhen I ask:\n- \"What's the status of [project]?\" → fetch latest events, blockers, and current phase\n- \"Why did we decide [X]?\" → search events for decision context\n- \"What's blocking us?\" → list all open blockers across projects\n\nEvery morning at 9 AM, run a cron job to:\n1. Scan git commits from the past 24 hours (via gh CLI)\n2. Link commits to projects based on branch names or commit messages\n3. Post a daily standup summary to Discord #project-state:\n   - What happened yesterday (events + commits)\n   - What's planned today (based on current phase and recent conversations)\n   - What's blocked (open blockers)\n\nWhen I'm planning a sprint, spawn a sub-agent to analyze each project's state and suggest priorities.\n```\n\n4. 集成到你的工作流中：只需自然地向助手谈论你在做什么。系统会捕获一切。\n\n## 相关链接\n\n- [事件溯源模式](https://martinfowler.com/eaaDev/EventSourcing.html)\n- [为什么看板对独立开发者无效](https://blog.nuclino.com/why-kanban-doesnt-work-for-me)"},"en":{"name":"Project State Management System: Event-Driven Alternative to","content":"# Project State Management System: Event-Driven Alternative to Kanban\n\nTraditional Kanban boards are static and require manual updates. You forget to move cards, lose context between sessions, and can't track the \"why\" behind state changes. Projects drift without clear visibility.\n\nThis workflow replaces Kanban with an event-driven system that tracks project state automatically:\n\n• Stores project state in a database with full history\n• Captures context: decisions, blockers, next steps, key insights\n• Event-driven updates: \"Just finished X, blocked on Y\" → automatic state transition\n• Natural language queries: \"What's the status of [project]?\", \"Why did we pivot on [feature]?\"\n• Daily standup summaries: What happened yesterday, what's planned today, what's blocked\n• Git integration: links commits to project events for traceability\n\n## Pain Point\n\nKanban boards become stale. You waste time updating cards instead of doing work. Context gets lost—three months later, you can't remember why you made a key decision. There's no automatic link between code changes and project progress.\n\n## What It Does\n\nInstead of dragging cards, you chat with your assistant: \"Finished the auth flow, starting on the dashboard.\" The system logs the event, updates project state, and preserves context. When you ask \"Where are we on the dashboard?\" it gives you the full story: what's done, what's next, what's blocking you, and why.\n\nGit commits are automatically scanned and linked to projects. Your daily standup summary writes itself.\n\n## Skills Needed\n\n- `postgres` or SQLite for project state database\n- `github` (gh CLI) for commit tracking\n- Discord or Telegram for updates and queries\n- Cron jobs for daily summaries\n- Sub-agents for parallel project analysis\n\n## How to Set it Up\n\n1. Set up a project state database:\n```sql\nCREATE TABLE projects (\n  id SERIAL PRIMARY KEY,\n  name TEXT UNIQUE,\n  status TEXT, -- e.g., \"active\", \"blocked\", \"completed\"\n  current_phase TEXT,\n  last_update TIMESTAMPTZ DEFAULT NOW()\n);\n\nCREATE TABLE events (\n  id SERIAL PRIMARY KEY,\n  project_id INTEGER REFERENCES projects(id),\n  event_type TEXT, -- e.g., \"progress\", \"blocker\", \"decision\", \"pivot\"\n  description TEXT,\n  context TEXT,\n  timestamp TIMESTAMPTZ DEFAULT NOW()\n);\n\nCREATE TABLE blockers (\n  id SERIAL PRIMARY KEY,\n  project_id INTEGER REFERENCES projects(id),\n  blocker_text TEXT,\n  status TEXT DEFAULT 'open', -- \"open\", \"resolved\"\n  created_at TIMESTAMPTZ DEFAULT NOW(),\n  resolved_at TIMESTAMPTZ\n);\n```\n\n2. Create a Discord channel for project updates (e.g., #project-state).\n\n3. Prompt OpenClaw:\n```text\nYou are my project state manager. Instead of Kanban, I'll tell you what I'm working on conversationally.\n\nWhen I say things like:\n- \"Finished [task]\" → log a \"progress\" event, update project state\n- \"Blocked on [issue]\" → create a blocker entry, update project status to \"blocked\"\n- \"Starting [new task]\" → log a \"progress\" event, update current phase\n- \"Decided to [decision]\" → log a \"decision\" event with full context\n- \"Pivoting to [new approach]\" → log a \"pivot\" event with reasoning\n\nWhen I ask:\n- \"What's the status of [project]?\" → fetch latest events, blockers, and current phase\n- \"Why did we decide [X]?\" → search events for decision context\n- \"What's blocking us?\" → list all open blockers across projects\n\nEvery morning at 9 AM, run a cron job to:\n1. Scan git commits from the past 24 hours (via gh CLI)\n2. Link commits to projects based on branch names or commit messages\n3. Post a daily standup summary to Discord #project-state:\n   - What happened yesterday (events + commits)\n   - What's planned today (based on current phase and recent conversations)\n   - What's blocked (open blockers)\n\nWhen I'm planning a sprint, spawn a sub-agent to analyze each project's state and suggest priorities.\n```\n\n4. Integrate with your workflow: Just talk to your assistant naturally about what you're doing. The system captures everything.\n\n## Related Links\n\n- [Event Sourcing Pattern](https://martinfowler.com/eaaDev/EventSourcing.html)\n- [Why Kanban Fails for Solo Developers](https://blog.nuclino.com/why-kanban-doesnt-work-for-me)\n"},"category":"productivity"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

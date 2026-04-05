@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>带有子代理生成的动态仪表板 | MSP-龙虾应用案例</title>
+  <meta name="description" content="静态仪表板显示过时数据，需要不断手动更新。您希望跨多个数据源获得实时可见性，而无需构建自定义前端或触及 API 速率限制。" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>生产力工具</span>
+      <span data-en>Productivity</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>带有子代理生成的动态仪表板</span>
+      <span data-en>Dynamic Dashboard with Sub-agent Spawning</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/dynamic-dashboard.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"带有子代理生成的动态仪表板","content":"# 带有子代理生成的动态仪表板\n\n静态仪表板显示过时数据，需要不断手动更新。您希望跨多个数据源获得实时可见性，而无需构建自定义前端或触及 API 速率限制。\n\n此工作流创建一个实时仪表板，生成子代理以并行获取和处理数据：\n\n• 同时监控多个数据源（API、数据库、GitHub、社交媒体）\n• 为每个数据源生成子代理以避免阻塞并分散 API 负载\n• 将结果汇总到统一仪表板（文本、HTML 或 Canvas）\n• 每 N 分钟使用新数据更新\n• 当指标超过阈值时发送告警\n• 在数据库中维护历史趋势以供可视化\n\n## 痛点\n\n构建自定义仪表板需要数周时间。完成后，需求已经改变。顺序轮询多个 API 速度慢且容易触及速率限制。您现在需要洞察，而不是经过一个周末的编码。\n\n## 功能说明\n\n您可以对话式定义想要监控的内容：\"追踪 GitHub 星标、Twitter 提及、Polymarket 交易量和系统健康状况。\" OpenClaw 生成子代理并行获取每个数据源，聚合结果，并将格式化的仪表板交付到 Discord 或 HTML 文件。更新在 cron 计划上自动运行。\n\n仪表板部分示例：\n- **GitHub**：星标、分叉、开放问题、最近提交\n- **社交媒体**：Twitter 提及、Reddit 讨论、Discord 活动\n- **市场**：Polymarket 交易量、预测趋势\n- **系统健康**：CPU、内存、磁盘使用情况、服务状态\n\n## 所需技能\n\n- 子代理生成以实现并行执行\n- `github`（gh CLI）用于 GitHub 指标\n- `bird`（Twitter）用于社交数据\n- `web_search` 或 `web_fetch` 用于外部 API\n- `postgres` 用于存储历史指标\n- Discord 或 Canvas 用于呈现仪表板\n- Cron 作业用于计划更新\n\n## 设置方法\n\n1. 设置指标数据库：\n```sql\nCREATE TABLE metrics (\n  id SERIAL PRIMARY KEY,\n  source TEXT, -- e.g., \"github\", \"twitter\", \"polymarket\"\n  metric_name TEXT,\n  metric_value NUMERIC,\n  timestamp TIMESTAMPTZ DEFAULT NOW()\n);\n\nCREATE TABLE alerts (\n  id SERIAL PRIMARY KEY,\n  source TEXT,\n  condition TEXT,\n  threshold NUMERIC,\n  last_triggered TIMESTAMPTZ\n);\n```\n\n2. 为仪表板更新创建 Discord 频道（例如 #dashboard）。\n\n3. 提示 OpenClaw：\n```text\nYou are my dynamic dashboard manager. Every 15 minutes, run a cron job to:\n\n1. Spawn sub-agents in parallel to fetch data from:\n   - GitHub: stars, forks, open issues, commits (past 24h)\n   - Twitter: mentions of \"@username\", sentiment analysis\n   - Polymarket: volume for tracked markets\n   - System: CPU, memory, disk usage via shell commands\n\n2. Each sub-agent writes results to the metrics database.\n\n3. Aggregate all results and format a dashboard:\n\n📊 **Dashboard Update** — [timestamp]\n\n**GitHub**\n- ⭐ Stars: [count] (+[change])\n- 🍴 Forks: [count]\n- 🐛 Open Issues: [count]\n- 💻 Commits (24h): [count]\n\n**Social Media**\n- 🐦 Twitter Mentions: [count]\n- 📈 Sentiment: [positive/negative/neutral]\n\n**Markets**\n- 📊 Polymarket Volume: $[amount]\n- 🔥 Trending: [market names]\n\n**System Health**\n- 💻 CPU: [usage]%\n- 🧠 Memory: [usage]%\n- 💾 Disk: [usage]%\n\n4. Post to Discord #dashboard.\n\n5. Check alert conditions:\n   - If GitHub stars change > 50 in 1 hour → ping me\n   - If system CPU > 90% → alert\n   - If negative sentiment spike on Twitter → notify\n\nStore all metrics in the database for historical analysis.\n```\n\n4. 可选：使用 Canvas 呈现带有图表和图形的 HTML 仪表板。\n\n5. 查询历史数据：\"显示过去 30 天的 GitHub 星标增长。\"\n\n## 相关链接\n\n- [使用子代理进行并行处理](https://docs.openclaw.ai/subagents)\n- [仪表板设计原则](https://www.nngroup.com/articles/dashboard-design/)"},"en":{"name":"Dynamic Dashboard with Sub-agent Spawning","content":"# Dynamic Dashboard with Sub-agent Spawning\n\nStatic dashboards show stale data and require constant manual updates. You want real-time visibility across multiple data sources without building a custom frontend or hitting API rate limits.\n\nThis workflow creates a live dashboard that spawns sub-agents to fetch and process data in parallel:\n\n• Monitors multiple data sources simultaneously (APIs, databases, GitHub, social media)\n• Spawns sub-agents for each data source to avoid blocking and distribute API load\n• Aggregates results into a unified dashboard (text, HTML, or Canvas)\n• Updates every N minutes with fresh data\n• Sends alerts when metrics cross thresholds\n• Maintains historical trends in a database for visualization\n\n## Pain Point\n\nBuilding a custom dashboard takes weeks. By the time it's done, requirements have changed. Polling multiple APIs sequentially is slow and hits rate limits. You need insight now, not after a weekend of coding.\n\n## What It Does\n\nYou define what you want to monitor conversationally: \"Track GitHub stars, Twitter mentions, Polymarket volume, and system health.\" OpenClaw spawns sub-agents to fetch each data source in parallel, aggregates the results, and delivers a formatted dashboard to Discord or as an HTML file. Updates run automatically on a cron schedule.\n\nExample dashboard sections:\n- **GitHub**: stars, forks, open issues, recent commits\n- **Social Media**: Twitter mentions, Reddit discussions, Discord activity\n- **Markets**: Polymarket volume, prediction trends\n- **System Health**: CPU, memory, disk usage, service status\n\n## Skills Needed\n\n- Sub-agent spawning for parallel execution\n- `github` (gh CLI) for GitHub metrics\n- `bird` (Twitter) for social data\n- `web_search` or `web_fetch` for external APIs\n- `postgres` for storing historical metrics\n- Discord or Canvas for rendering the dashboard\n- Cron jobs for scheduled updates\n\n## How to Set it Up\n\n1. Set up a metrics database:\n```sql\nCREATE TABLE metrics (\n  id SERIAL PRIMARY KEY,\n  source TEXT, -- e.g., \"github\", \"twitter\", \"polymarket\"\n  metric_name TEXT,\n  metric_value NUMERIC,\n  timestamp TIMESTAMPTZ DEFAULT NOW()\n);\n\nCREATE TABLE alerts (\n  id SERIAL PRIMARY KEY,\n  source TEXT,\n  condition TEXT,\n  threshold NUMERIC,\n  last_triggered TIMESTAMPTZ\n);\n```\n\n2. Create a Discord channel for dashboard updates (e.g., #dashboard).\n\n3. Prompt OpenClaw:\n```text\nYou are my dynamic dashboard manager. Every 15 minutes, run a cron job to:\n\n1. Spawn sub-agents in parallel to fetch data from:\n   - GitHub: stars, forks, open issues, commits (past 24h)\n   - Twitter: mentions of \"@username\", sentiment analysis\n   - Polymarket: volume for tracked markets\n   - System: CPU, memory, disk usage via shell commands\n\n2. Each sub-agent writes results to the metrics database.\n\n3. Aggregate all results and format a dashboard:\n\n📊 **Dashboard Update** — [timestamp]\n\n**GitHub**\n- ⭐ Stars: [count] (+[change])\n- 🍴 Forks: [count]\n- 🐛 Open Issues: [count]\n- 💻 Commits (24h): [count]\n\n**Social Media**\n- 🐦 Twitter Mentions: [count]\n- 📈 Sentiment: [positive/negative/neutral]\n\n**Markets**\n- 📊 Polymarket Volume: $[amount]\n- 🔥 Trending: [market names]\n\n**System Health**\n- 💻 CPU: [usage]%\n- 🧠 Memory: [usage]%\n- 💾 Disk: [usage]%\n\n4. Post to Discord #dashboard.\n\n5. Check alert conditions:\n   - If GitHub stars change > 50 in 1 hour → ping me\n   - If system CPU > 90% → alert\n   - If negative sentiment spike on Twitter → notify\n\nStore all metrics in the database for historical analysis.\n```\n\n4. Optional: Use Canvas to render an HTML dashboard with charts and graphs.\n\n5. Query historical data: \"Show me GitHub star growth over the past 30 days.\"\n\n## Related Links\n\n- [Parallel Processing with Sub-agents](https://docs.openclaw.ai/subagents)\n- [Dashboard Design Principles](https://www.nngroup.com/articles/dashboard-design/)\n"},"category":"productivity"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

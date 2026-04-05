@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>每日 YouTube 摘要 | MSP-龙虾应用案例</title>
+  <meta name="description" content="用个性化的摘要开始你的一天，了解你喜爱的 YouTube 频道的最新视频——再也不会错过你真正想关注的创作者的内容。" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>社交媒体</span>
+      <span data-en>Social Media</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>每日 YouTube 摘要</span>
+      <span data-en>Daily YouTube Digest</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/daily-youtube-digest.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"每日 YouTube 摘要","content":"# 每日 YouTube 摘要\n\n用个性化的摘要开始你的一天，了解你喜爱的 YouTube 频道的最新视频——再也不会错过你真正想关注的创作者的内容。\n\n## 痛点\n\nYouTube 的通知功能不可靠。你订阅了频道，但他们的新视频永远不会出现在你的主页信息流中。它们不在通知里。它们就这样……消失了。这并不意味着你不想看到它们——这意味着 YouTube 的算法把它们埋没了。\n\n另外，用精心策划的内容见解开始一天比刷个性化推荐信息流要有趣得多。\n\n## 功能说明\n\n- 从你喜爱的频道列表中获取最新视频\n- 总结或提取每个视频转录稿的关键信息\n- 每天（或按需）发送摘要给你\n\n## 所需技能\n\n安装 [youtube-full](https://clawhub.ai/therohitdas/youtube-full) 技能。\n\n只需告诉你的 OpenClaw：\n\n```text\n\"Install the youtube-full skill and set it up for me\"\n```\n\n或\n\n```bash\nnpx clawhub@latest install youtube-full\n```\n\n就这样。agent 会处理其余的一切——包括账户创建和 API 密钥设置。你会获得**注册时免费的 100 额度**，无需信用卡。\n\n> 注意：创建账户后，该技能会根据操作系统自动将 API 密钥安全地存储在正确的位置，所以 API 在所有环境中都能工作。\n\n![youtube-full 技能安装](https://pub-15904f15a44a4ea69350737e87660b92.r2.dev/media/1770620159490-e41e7baa.png)\n\n### 为什么选择 TranscriptAPI.com 而不是 yt-dlp？\n\n| CLI 工具 (yt-dlp 等) | TranscriptAPI |\n|--------------------------|---------------|\n| 冗长的日志充斥 agent 上下文 | 干净的 JSON 响应 |\n| 在 GCP/云 OpenClaw 上无法工作 | 随处可用，速度快 |\n| 被 YouTube 随机封禁 | 驱动 [YouTubeToTranscript.com](https://youtubetotranscript.com)，服务数百万用户。缓存可靠。 |\n| 需要二进制文件安装 | 无需二进制文件，仅 HTTP |\n\n## 设置方法\n\n### 方案 1：基于频道的摘要\n\n向 OpenClaw 提示：\n\n```text\n每天早上 8 点，从这些 YouTube 频道获取最新视频，并给我一份包含每个视频关键信息的摘要：\n\n- @TED\n- @Fireship\n- @ThePrimeTimeagen\n- @lexfridman\n\n对于每个新视频（在过去 24-48 小时内上传）：\n1. 获取转录稿\n2. 用 2-3 个要点总结主要内容\n3. 包含视频标题、频道名称和链接\n\n如果频道句柄无法解析，请搜索并找到正确的。\n将我的频道列表保存到记忆中，以便我以后可以添加/删除频道。\n```\n\n### 方案 2：基于关键词的摘要\n\n跟踪关于特定话题的新视频：\n\n```text\n每天搜索 YouTube 上关于\"OpenClaw\"（或\"Claude Code\"、\"AI agents\"等）的新视频。\n\n维护一个名为 seen-videos.txt 的文件，其中包含你已处理过的视频 ID。\n仅获取不在该文件中的视频的转录稿。\n处理后，将视频 ID 添加到 seen-videos.txt。\n\n对于每个新视频：\n1. 获取转录稿\n2. 给我一份 3 要点的摘要\n3. 标记与我工作相关的任何内容\n\n每天早上 9 点运行。\n```\n\n这样你就永远不会浪费额度重新获取你已经看过的视频。\n\n## 提示\n\n- `channel/latest` 和 `channel/resolve` 是**免费的**（0 额度）——检查新上传不需要任何成本\n- 仅转录稿需要 1 额度\n- 要求不同的摘要风格：关键要点、值得注意的引言、有趣时刻的时间戳\n- 这已经作为产品存在 - [Recapio - Daily YouTube Recap](https://recapio.com/features/daily-recaps)"},"en":{"name":"Daily YouTube Digest","content":"# Daily YouTube Digest\n\nStart your day with a personalized summary of new videos from your favorite YouTube channels — no more missing content from creators you actually want to follow.\n\n## Pain Point\n\nYouTube notifications are unreliable. You subscribe to channels, but their new videos never show up in your home feed. They're not in notifications. They just... disappear. This doesn't mean you don't want to see them — it means YouTube's algorithm buried them.\n\nPlus: it's fun to start the day with curated content insights instead of doom-scrolling a recommendation feed.\n\n## What It Does\n\n- Fetches the latest videos from a list of your favorite channels\n- Summarizes or extracts key insights from each video's transcript\n- Delivers a digest to you daily (or on demand)\n\n## Skills You Need\n\nInstall the [youtube-full](https://clawhub.ai/therohitdas/youtube-full) skill.\n\nJust tell your OpenClaw:\n\n```text\n\"Install the youtube-full skill and set it up for me\"\n```\nor \n\n```bash\nnpx clawhub@latest install youtube-full\n```\n\nThat's it. The agent handles the rest — including account creation and API key setup. You get **100 free credits on signup**, no credit card required.\n\n> Note: After creating the account, the skill auto-stores the API key securely in correct locations based on the OS, so the API will work in all contexts.\n\n![youtube-full skill installation](https://pub-15904f15a44a4ea69350737e87660b92.r2.dev/media/1770620159490-e41e7baa.png)\n\n### Why TranscriptAPI.com over yt-dlp?\n\n| CLI tools (yt-dlp, etc.) | TranscriptAPI |\n|--------------------------|---------------|\n| Verbose logs flood agent context | Clean JSON responses |\n| Doesn't work on GCP/cloud OpenClaw | Works everywhere, fast |\n| Gets blocked randomly by YouTube | Powers [YouTubeToTranscript.com](https://youtubetotranscript.com) serving millions. Cached and reliable. |\n| Requires binary installation | No binaries, just HTTP |\n\n## How to Set It Up\n\n### Option 1: Channel-based digest\n\nPrompt OpenClaw:\n\n```text\nEvery morning at 8am, fetch the latest videos from these YouTube channels and give me a digest with key insights from each:\n\n- @TED\n- @Fireship\n- @ThePrimeTimeagen\n- @lexfridman\n\nFor each new video (uploaded in the last 24-48 hours):\n1. Get the transcript\n2. Summarize the main points in 2-3 bullets\n3. Include the video title, channel name, and link\n\nIf a channel handle doesn't resolve, search for it and find the correct one.\nSave my channel list to memory so I can add/remove channels later.\n```\n\n### Option 2: Keyword-based digest\n\nTrack new videos about a specific topic:\n\n```text\nEvery day, search YouTube for new videos about \"OpenClaw\" (or \"Claude Code\", \"AI agents\", etc).\n\nMaintain a file called seen-videos.txt with video IDs you've already processed.\nOnly fetch transcripts for videos NOT in that file.\nAfter processing, add the video ID to seen-videos.txt.\n\nFor each new video:\n1. Get the transcript\n2. Give me a 3-bullet summary\n3. Note anything relevant to my work\n\nRun this every morning at 9am.\n```\n\nThis way you never waste credits re-fetching videos you've already seen.\n\n## Tips\n\n- `channel/latest` and `channel/resolve` are **free** (0 credits) — checking for new uploads costs nothing\n- Only transcripts cost 1 credit each\n- Ask for different digest styles: key takeaways, notable quotes, timestamps of interesting moments\n- This already exists as a product - [Recapio - Daily YouTube Recap](https://recapio.com/features/daily-recaps)"},"category":"social-media"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pre-Build 想法验证器 | MSP-龙虾应用案例</title>
+  <meta name="description" content="在 OpenClaw 开始构建任何新东西之前，它会自动检查该想法是否已经存在于 GitHub、Hacker News、npm、PyPI 和 Product Hunt 上，并根据发现的结果调整其方法。" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>研究与学习</span>
+      <span data-en>Research & Learning</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>Pre-Build 想法验证器</span>
+      <span data-en>Pre-Build Idea Validator</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/pre-build-idea-validator.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"Pre-Build 想法验证器","content":"# Pre-Build 想法验证器\n\n在 OpenClaw 开始构建任何新东西之前，它会自动检查该想法是否已经存在于 GitHub、Hacker News、npm、PyPI 和 Product Hunt 上，并根据发现的结果调整其方法。\n\n## 功能\n\n- 在编写任何代码之前扫描 5 个真实数据源（GitHub、Hacker News、npm、PyPI、Product Hunt）\n- 返回 `reality_signal` 分数（0-100），表示该领域的竞争程度\n- 显示排名靠前的竞争对手及其星标数和描述\n- 当市场饱和时建议调整方向\n- 作为预构建门控：高信号 = 停止并讨论，低信号 = 继续进行\n\n## 痛点\n\n你告诉代理\"给我构建一个 AI 代码审查工具\"，它高兴地花了 6 个小时编码。与此同时，GitHub 上已经存在 143,000+ 个相关的仓库 — 排名第一的有 53,000 颗星。代理从不检查，因为你从未要求过，而且它不知道需要查看。你只有在投入了大量时间后才会发现竞争对手。这种模式对每个新项目想法都会重复。\n\n## 所需技能\n\n- [idea-reality-mcp](https://github.com/mnemox-ai/idea-reality-mcp) — MCP 服务器，扫描真实数据源并返回竞争分数\n\n## 设置步骤\n\n1. 安装 idea-reality-mcp：\n\n```bash\nuvx idea-reality-mcp\n```\n\n2. 将 MCP 服务器添加到你的 OpenClaw 配置：\n\n```json\n{\n  \"mcpServers\": {\n    \"idea-reality\": {\n      \"command\": \"uvx\",\n      \"args\": [\"idea-reality-mcp\"]\n    }\n  }\n}\n```\n\n3. 将以下内容添加到你的 OpenClaw 代理指示中：\n\n```text\n在启动任何新项目、功能或工具之前，总是先运行 idea_check。\n\n规则：\n- 如果 reality_signal > 70：停止。报告前 3 名竞争对手及其星标数。\n  询问我是否要继续、调整方向或放弃。\n- 如果 reality_signal 在 30-70 之间：显示结果和 pivot_hints。\n  建议现有项目未覆盖的利基角度。\n- 如果 reality_signal < 30：继续构建。\n  提及该领域是开放的。\n- 始终在编写任何代码之前显示 reality_signal 分数和排名靠前的竞争对手。\n```\n\n## 真实示例\n\n**你：** \"给我构建一个 AI 代码审查的命令行工具\"\n\nOpenClaw 运行 `idea_check(\"AI code review tool\")` 并响应：\n\n> **reality_signal: 90/100（非常高）**\n>\n> 排名靠前的竞争对手：\n> 1. Gitea — 53,940 颗星\n> 2. reviewdog — 9,104 颗星\n> 3. Danger (Ruby) — 5,649 颗星\n>\n> 该领域有 143,000+ 个相关仓库。排名靠前的项目成熟且资金充足。\n>\n> **调整方向建议：**\n> - 专注于特定编程语言（仅限 Rust/Go 的 AI 代码审查）\n> - 针对特定框架（React/Vue 组件审查）\n> - 针对特定行业（金融/医疗代码合规审查）\n>\n> 我应该继续进行区分化方向，还是调整到其他方向？\n\n**你：** \"那一个用于 pre-build 想法验证的 MCP 服务器怎么样？\"\n\n> **reality_signal: 8/100（非常低）**\n>\n> 在 PyPI 或 npm 上未找到直接竞争对手。GitHub 上有一些相关的仓库，但没有一个解决这个确切的问题。\n>\n> 该领域完全空白。继续构建。\n\n## 变体\n\n- **深度模式以应对重大决策**：使用 `depth=\"deep\"` 并行扫描所有 5 个数据源（GitHub + HN + npm + PyPI + Product Hunt），用于重大项目决策。\n- **批量验证**：在黑客马拉松前，给 OpenClaw 一个 10 个想法的列表，让它按 `reality_signal` 排序 — 最低分数 = 最具原创性的机会。\n- **先试用 Web 演示**：无需安装，访问 [mnemox.ai/check](https://mnemox.ai/check) 查看该工作流是否符���你的需求��\n\n## 关键见解\n\n- 这可以防止构建中最昂贵的错误：**解决一个已经被解决过的问题**。\n- `reality_signal` 基于真实数据（仓库计数、星标分布、HN 讨论量），而不是 LLM 猜测。\n- 高分数不意味着\"不要构建\" — 它意味着\"区分化或放弃\"。\n- 低分数意味着存在真正的白色空间。这是独立开发者最有优势的地方。\n\n## 相关链接\n\n- [idea-reality-mcp GitHub](https://github.com/mnemox-ai/idea-reality-mcp)\n- [Web 演示](https://mnemox.ai/check)（无需安装即可尝试）\n- [PyPI](https://pypi.org/project/idea-reality-mcp/)"},"en":{"name":"Pre-Build Idea Validator","content":"# Pre-Build Idea Validator\n\nBefore OpenClaw starts building anything new, it automatically checks whether the idea already exists across GitHub, Hacker News, npm, PyPI, and Product Hunt — and adjusts its approach based on what it finds.\n\n## What It Does\n\n- Scans 5 real data sources (GitHub, Hacker News, npm, PyPI, Product Hunt) before any code is written\n- Returns a `reality_signal` score (0-100) indicating how crowded the space is\n- Shows top competitors with star counts and descriptions\n- Suggests pivot directions when the space is saturated\n- Works as a pre-build gate: high signal = stop and discuss, low signal = proceed\n\n## Pain Point\n\nYou tell your agent \"build me an AI code review tool\" and it happily spends 6 hours coding. Meanwhile, 143,000+ repos already exist on GitHub — the top one has 53,000 stars. The agent never checks because you never asked, and it doesn't know to look. You only discover competitors after you've invested significant time. This pattern repeats for every new project idea.\n\n## Skills You Need\n\n- [idea-reality-mcp](https://github.com/mnemox-ai/idea-reality-mcp) — MCP server that scans real data sources and returns a competition score\n\n## How to Set It Up\n\n1. Install idea-reality-mcp:\n\n```bash\nuvx idea-reality-mcp\n```\n\n2. Add the MCP server to your OpenClaw config:\n\n```json\n{\n  \"mcpServers\": {\n    \"idea-reality\": {\n      \"command\": \"uvx\",\n      \"args\": [\"idea-reality-mcp\"]\n    }\n  }\n}\n```\n\n3. Add this to your OpenClaw agent instructions:\n\n```text\nBefore starting any new project, feature, or tool, always run idea_check first.\n\nRules:\n- If reality_signal > 70: STOP. Report the top 3 competitors with star counts.\n  Ask me if I want to proceed, pivot, or abandon.\n- If reality_signal 30-70: Show me the results and pivot_hints.\n  Suggest a niche angle that existing projects don't cover.\n- If reality_signal < 30: Proceed to build.\n  Mention that the space is open.\n- Always show the reality_signal score and top competitors before writing any code.\n```\n\n## Real World Example\n\n**You:** \"Build me a CLI tool for AI code review\"\n\nOpenClaw runs `idea_check(\"AI code review tool\")` and responds:\n\n> **reality_signal: 90/100 (very high)**\n>\n> Top competitors:\n> 1. Gitea — 53,940 stars\n> 2. reviewdog — 9,104 stars\n> 3. Danger (Ruby) — 5,649 stars\n>\n> This space has 143,000+ related repos. The top players are mature and well-funded.\n>\n> **Pivot suggestions:**\n> - Focus on a specific language (Rust/Go-only AI code review)\n> - Target a specific framework (React/Vue component review)\n> - Target a specific industry (financial/medical code compliance review)\n>\n> Should I proceed with a differentiated angle, or pivot to something else?\n\n**You:** \"What about an MCP server for pre-build idea validation?\"\n\n> **reality_signal: 8/100 (very low)**\n>\n> 0 direct competitors found on PyPI or npm. GitHub has some tangentially related repos but none solve this exact problem.\n>\n> The space is wide open. Proceeding to build.\n\n## Variations\n\n- **Deep mode for serious decisions**: Use `depth=\"deep\"` to scan all 5 sources in parallel (GitHub + HN + npm + PyPI + Product Hunt) for major project decisions.\n- **Batch validation**: Before a hackathon, give OpenClaw a list of 10 ideas and have it rank them by `reality_signal` — lowest score = most original opportunity.\n- **Web demo first**: Try without installing at [mnemox.ai/check](https://mnemox.ai/check) to see if the workflow fits your needs.\n\n## Key Insights\n\n- This prevents the most expensive mistake in building: **solving a problem that's already been solved**.\n- The `reality_signal` is based on real data (repo counts, star distributions, HN discussion volume), not LLM guessing.\n- A high score doesn't mean \"don't build\" — it means \"differentiate or don't bother.\"\n- A low score means genuine white space exists. That's where solo builders have the best odds.\n\n## Related Links\n\n- [idea-reality-mcp GitHub](https://github.com/mnemox-ai/idea-reality-mcp)\n- [Web demo](https://mnemox.ai/check) (try without installing)\n- [PyPI](https://pypi.org/project/idea-reality-mcp/)\n"},"category":"research"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

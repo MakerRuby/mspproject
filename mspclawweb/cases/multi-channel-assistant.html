@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>多渠道个人助手 | MSP-龙虾应用案例</title>
+  <meta name="description" content="在应用之间切换以管理任务、安排事件、发送消息和跟踪工作令人疲惫。你需要一个能够连接所有工具的统一界面。" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>生产力工具</span>
+      <span data-en>Productivity</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>多渠道个人助手</span>
+      <span data-en>Multi-Channel Personal Assistant</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/multi-channel-assistant.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"多渠道个人助手","content":"# 多渠道个人助手\n\n在应用之间切换以管理任务、安排事件、发送消息和跟踪工作令人疲惫。你需要一个能够连接所有工具的统一界面。\n\n这个工作流将所有内容整合到一个 AI 助手中：\n\n• Telegram 作为主要界面，具有基于主题的路由（视频创意、CRM、收入、配置等不同主题）\n• Slack 集成用于团队协作（任务分配、知识库保存、视频创意触发）\n• Google Workspace：从聊天中创建日历事件、管理电子邮件、上传到 Drive\n• Todoist 用于快速任务捕获\n• Asana 用于项目管理\n• 自动化提醒：垃圾日、周公司信等\n\n## 所需技能\n\n- `gog` CLI（Google Workspace）\n- Slack 集成（bot + 用户令牌）\n- Todoist API 或技能\n- Asana API 或技能\n- 配置了多个主题的 Telegram 频道\n\n## 设置方法\n\n1. 为不同的上下文设置 Telegram 主题：\n   - `config` — bot 设置和调试\n   - `updates` — 状态和通知\n   - `video-ideas` — 内容管道\n   - `personal-crm` — 联系人管理\n   - `earnings` — 财务跟踪\n   - `knowledge-base` — RAG 摄入和查询\n\n2. 通过 OpenClaw 配置连接所有工具：\n   - Google OAuth（Gmail、Calendar、Drive）\n   - Slack（应用 + 用户令牌）\n   - Todoist API 令牌\n   - Asana API 令牌\n\n3. 提示 OpenClaw：\n```text\nYou are my multi-channel assistant. Route requests based on context:\n\nTelegram topics:\n- \"config\" → system settings, debugging\n- \"updates\" → daily summaries, reminders, calendar\n- \"video-ideas\" → content pipeline and research\n- \"personal-crm\" → contact queries and meeting prep\n- \"earnings\" → financial tracking\n- \"knowledge-base\" → save and search content\n\nWhen I ask you to:\n- \"Add [task] to my todo\" → use Todoist\n- \"Create a card for [topic]\" → use Asana Video Pipeline project\n- \"Schedule [event]\" → use gog calendar\n- \"Email [person] about [topic]\" → draft email via gog gmail\n- \"Upload [file] to Drive\" → use gog drive\n\nSet up automated reminders:\n- Monday 6 PM: \"🗑️ Trash day tomorrow\"\n- Friday 3 PM: \"✍️ Time to write the weekly company update\"\n```\n\n4. 逐个测试每个集成，然后测试跨工作流交互（例如，将 Slack 链接保存到知识库，然后在视频研究卡中使用它）。"},"en":{"name":"Multi-Channel Personal Assistant","content":"# Multi-Channel Personal Assistant\n\nContext-switching between apps to manage tasks, schedule events, send messages, and track work is exhausting. You want one interface that routes to all your tools.\n\nThis workflow consolidates everything into a single AI assistant:\n\n• Telegram as primary interface with topic-based routing (different topics for video ideas, CRM, earnings, config, etc.)\n• Slack integration for team collaboration (task assignment, knowledge base saves, video idea triggers)\n• Google Workspace: create calendar events, manage email, upload to Drive — all from chat\n• Todoist for quick task capture\n• Asana for project management\n• Automated reminders: trash day, weekly company letter, etc.\n\n## Skills you Need\n\n- `gog` CLI (Google Workspace)\n- Slack integration (bot + user tokens)\n- Todoist API or skill\n- Asana API or skill\n- Telegram channel with multiple topics configured\n\n## How to Set it Up\n\n1. Set up Telegram topics for different contexts:\n   - `config` — bot settings and debugging\n   - `updates` — status and notifications\n   - `video-ideas` — content pipeline\n   - `personal-crm` — contact management\n   - `earnings` — financial tracking\n   - `knowledge-base` — RAG ingestion and queries\n\n2. Connect all your tools via OpenClaw config:\n   - Google OAuth (Gmail, Calendar, Drive)\n   - Slack (app + user tokens)\n   - Todoist API token\n   - Asana API token\n\n3. Prompt OpenClaw:\n```text\nYou are my multi-channel assistant. Route requests based on context:\n\nTelegram topics:\n- \"config\" → system settings, debugging\n- \"updates\" → daily summaries, reminders, calendar\n- \"video-ideas\" → content pipeline and research\n- \"personal-crm\" → contact queries and meeting prep\n- \"earnings\" → financial tracking\n- \"knowledge-base\" → save and search content\n\nWhen I ask you to:\n- \"Add [task] to my todo\" → use Todoist\n- \"Create a card for [topic]\" → use Asana Video Pipeline project\n- \"Schedule [event]\" → use gog calendar\n- \"Email [person] about [topic]\" → draft email via gog gmail\n- \"Upload [file] to Drive\" → use gog drive\n\nSet up automated reminders:\n- Monday 6 PM: \"🗑️ Trash day tomorrow\"\n- Friday 3 PM: \"✍️ Time to write the weekly company update\"\n```\n\n4. Test each integration individually, then test cross-workflow interactions (e.g., saving a Slack link to knowledge base, then using it in a video research card).\n"},"category":"productivity"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

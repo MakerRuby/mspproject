@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>个人知识库 (RAG) | MSP-龙虾应用案例</title>
+  <meta name="description" content="你整天阅读文章、推文和观看视频，但总是找不到上周看过的那个东西。书签堆积成山，变得一无是处。" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>研究与学习</span>
+      <span data-en>Research & Learning</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>个人知识库 (RAG)</span>
+      <span data-en>Personal Knowledge Base (RAG)</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/knowledge-base-rag.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"个人知识库 (RAG)","content":"# 个人知识库 (RAG)\n\n你整天阅读文章、推文和观看视频，但总是找不到上周看过的那个东西。书签堆积成山，变得一无是处。\n\n这个工作流从你保存的所有内容中构建一个可搜索的知识库：\n\n• 将任何 URL 放入 Telegram 或 Slack，它会自动摄取内容（文章、推文、YouTube 文字记录、PDF）\n• 对你保存的所有内容进行语义搜索：\"我保存过什么关于智能体内存的内容？\"返回排名结果及其来源\n• 馈送到其他工作流中——例如，视频创意管道在构建研究卡片时查询知识库中的相关保存内容\n\n## 所需技能\n\n- [knowledge-base](https://clawhub.ai) 技能（或使用嵌入构建自定义 RAG）\n- `web_fetch`（内置）\n- 用于摄取的 Telegram 话题或 Slack 频道\n\n## 设置方法\n\n1. 从 ClawdHub 安装 knowledge-base 技能。\n2. 创建一个名为 \"knowledge-base\" 的 Telegram 话题（或使用 Slack 频道）。\n3. 提示 OpenClaw：\n```text\nWhen I drop a URL in the \"knowledge-base\" topic:\n1. Fetch the content (article, tweet, YouTube transcript, PDF)\n2. Ingest it into the knowledge base with metadata (title, URL, date, type)\n3. Reply with confirmation: what was ingested and chunk count\n\nWhen I ask a question in this topic:\n1. Search the knowledge base semantically\n2. Return top results with sources and relevant excerpts\n3. If no good matches, tell me\n\nAlso: when other workflows need research (e.g., video ideas, meeting prep), automatically query the knowledge base for relevant saved content.\n```\n\n4. 通过放入几个 URL 并提问来测试它，例如\"我有什么关于 LLM 内存的内容？\""},"en":{"name":"Personal Knowledge Base (RAG)","content":"# Personal Knowledge Base (RAG)\n\nYou read articles, tweets, and watch videos all day but can never find that one thing you saw last week. Bookmarks pile up and become useless.\n\nThis workflow builds a searchable knowledge base from everything you save:\n\n• Drop any URL into Telegram or Slack and it auto-ingests the content (articles, tweets, YouTube transcripts, PDFs)\n• Semantic search over everything you've saved: \"What did I save about agent memory?\" returns ranked results with sources\n• Feeds into other workflows — e.g., the video idea pipeline queries the KB for relevant saved content when building research cards\n\n## Skills you Need\n\n- [knowledge-base](https://clawhub.ai) skill (or build custom RAG with embeddings)\n- `web_fetch` (built-in)\n- Telegram topic or Slack channel for ingestion\n\n## How to Set it Up\n\n1. Install the knowledge-base skill from ClawdHub.\n2. Create a Telegram topic called \"knowledge-base\" (or use a Slack channel).\n3. Prompt OpenClaw:\n```text\nWhen I drop a URL in the \"knowledge-base\" topic:\n1. Fetch the content (article, tweet, YouTube transcript, PDF)\n2. Ingest it into the knowledge base with metadata (title, URL, date, type)\n3. Reply with confirmation: what was ingested and chunk count\n\nWhen I ask a question in this topic:\n1. Search the knowledge base semantically\n2. Return top results with sources and relevant excerpts\n3. If no good matches, tell me\n\nAlso: when other workflows need research (e.g., video ideas, meeting prep), automatically query the knowledge base for relevant saved content.\n```\n\n4. Test it by dropping a few URLs and asking questions like \"What do I have about LLM memory?\"\n"},"category":"research"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>

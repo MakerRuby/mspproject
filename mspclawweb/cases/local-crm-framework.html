@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>使用 DenchClaw 的本地 CRM 框架 | MSP-龙虾应用案例</title>
+  <meta name="description" content="使用 OpenClaw 设置一个真正可用的 CRM 是件痛苦的事。你需要连接数据库、构建 UI、配置浏览器自动化、集成消息平台，并以某种方式让 Agent 理解你的数据架构。大多数人中途就放弃了，最后得到的只是一个半成品的 Notion 集" />
+  <link rel="stylesheet" href="../css/case.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <nav class="case-nav">
+    <a href="../index.html" class="back-btn">
+      ← <span data-zh>返回案例库</span><span data-en>Back to Cases</span>
+    </a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </nav>
+
+  <main class="case-container">
+    <span class="case-category-tag">
+      <span data-zh>生产力工具</span>
+      <span data-en>Productivity</span>
+    </span>
+
+    <h1 class="case-title-zh">
+      <span data-zh>使用 DenchClaw 的本地 CRM 框架</span>
+      <span data-en>Local CRM Framework with DenchClaw</span>
+    </h1>
+
+    <hr class="case-divider" />
+
+    <div id="content-zh" class="case-content" data-zh></div>
+    <div id="content-en" class="case-content" data-en></div>
+
+    <footer class="github-footer">
+      <a href="https://github.com/hesamsheikh/awesome-openclaw-usecases/blob/main/usecases/local-crm-framework.md" target="_blank" rel="noopener" class="github-link">
+        <span data-zh>查看 GitHub 原文</span>
+        <span data-en>View on GitHub</span>
+        ↗
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    window.CASE_DATA = {"zh":{"name":"使用 DenchClaw 的本地 CRM 框架","content":"# 使用 DenchClaw 的本地 CRM 框架\n\n使用 OpenClaw 设置一个真正可用的 CRM 是件痛苦的事。你需要连接数据库、构建 UI、配置浏览器自动化、集成消息平台，并以某种方式让 Agent 理解你的数据架构。大多数人中途就放弃了，最后得到的只是一个半成品的 Notion 集成。\n\nDenchClaw 是一个开源框架，将 OpenClaw 转变为一个完全本地的 CRM、销售自动化和生产力平台——通过单个命令安装并完全运行在你的机器上。\n\n## 痛点\n\nOpenClaw 作为一个基础工具非常强大，但将其用于真实的业务工作流（潜在客户跟踪、外拓、管道管理）需要整合十几个工具：数据库、UI、浏览器访问、消息集成、文件管理。每一个新的集成意味着更多的手动设置、更多需要管理的凭证，以及更多可能出故障的东西。你需要的是业务运营中达到 Cursor 级别的用户体验，而不是一堆 shell 脚本。\n\n## 功能特性\n\n- **一键安装**：`npx denchclaw` 安装所有内容——DuckDB 数据库、Web UI、OpenClaw 配置文件、浏览器自动化、技能——并在 `localhost:3100` 打开\n- **自然语言 CRM**：询问\"显示员工超过 5 人的公司\"，它会实时更新视图。无需手动筛选\n- **完整的浏览器自动化**：复制你的 Chrome 配置文件，以便 Agent 拥有你相同的身份验证状态——说\"从我的 HubSpot 导入所有内容\"，它就会登录、导出并导入\n- **多种视图**：表格、看板、日历、时间线（甘特图）、画廊和列表视图——都可由 Agent 通过 YAML 配置\n- **应用构建器**：OpenClaw 构建自包含的 Web 应用（仪表板、工具、游戏），在工作区内运行并可访问你的数据\n- **文件系统优先**：表格筛选、视图、列切换、日历设置——一切都是文件，所以 OpenClaw 可以直接读取和修改\n- **用作编码 Agent**：DenchClaw 构建了 DenchClaw。它也是你 Mac 上的完整文件树浏览器和代码编辑器\n\n## 如何设置\n\n1. 使用一个命令安装：\n\n```bash\nnpx denchclaw\n```\n\n2. 完成入门向导。DenchClaw 创建一个名为 `dench` 的专用 OpenClaw 配置文件，并在端口 19001 上启动一个网关。\n\n3. 在浏览器中打开 `localhost:3100`。在 Safari 中，将其作为 PWA 添加到 Dock。\n\n4. 开始与它对话：\n\n```text\n嘿，创建一个\"潜在客户\"对象，包含字段：姓名、电子邮件、公司、状态（新建/已联系/已认定/已成交/已失效）和备注。导入我从 Apollo 下载的这个潜在客户 CSV 文件。\n```\n\n```text\n显示所有状态为\"已联系\"的潜在客户，并按最后更新时间排序。切换到按状态分组的看板视图。\n```\n\n```text\n进入我的 LinkedIn，找到最后 20 个查看过我的资料的人，并将他们添加为潜在客户，并用他们公司的信息进行充实。\n```\n\n```text\n基于这些潜在客户所在公司的最近新闻，为\"新建\"状态的每个潜在客户起草个性化的外拓邮件。将草稿保存在一个新的\"外拓草稿\"文档中。\n```\n\n5. 你也可以通过 Telegram 或任何连接的消息平台使用它——在移动中从手机上管理你的管道。\n\n## 所需技能\n\nDenchClaw 自动捆绑所有必需的技能：\n\n- **CRM 技能** — 由 DuckDB 支持的结构化数据管理，包括对象、字段、条目和多种视图类型\n- **应用构建器技能** — 构建在工作区内运行并可访问你的数据库的 Web 应用（仪表板、工具）\n- **浏览器自动化技能** — 带有你现有 Chrome 身份验证状态的 Chromium 浏览器，用于网页抓取、导入和外���\n\n无需其他技能安装或配置。\n\n## 核心见解\n\n- **文件系统 = Agent 原生 UI**：由于每个设置、筛选和视图都存储为 YAML/markdown 文件，OpenClaw 可以像编辑代码一样自然地修改 UI。无需 API 包装。\n- **DuckDB 是最佳选择**：最小、最高效的嵌入式数据库，仍支持完整 SQL。无服务进程、无凭证、无网络——只是一个文件。\n- **Chrome 配置文件克隆是超级能力**：DenchClaw 不是与 OAuth 流和 API 速率限制作斗争，而是复制你浏览器的身份验证状态。Agent 看到你看到的，做你做的。\n- **一个 `npx` 命令胜过一个周末的设置**：整个栈（数据库、Web UI、OpenClaw 配置文件、网关、浏览器、技能）自动安装和配置。无 Docker、无 env 文件、无依赖地狱。\n\n## 演示\n\n[观看演示视频](https://www.youtube.com/watch?v=pfACTbc3Bh4#t=43)——展示从安装到使用自然语言管理实时 CRM 管道的完整工作流。\n\n## 相关链接\n\n- [DenchClaw GitHub](https://github.com/DenchHQ/DenchClaw) — MIT 许可证，开源\n- [DenchClaw 网站](https://denchclaw.com)\n- [Discord 社区](https://discord.gg/PDFXNVQj9n)\n- [技能商店](https://skills.sh)"},"en":{"name":"Local CRM Framework with DenchClaw","content":"# Local CRM Framework with DenchClaw\n\nSetting up a CRM that actually works with OpenClaw is painful. You need to wire up databases, build UIs, configure browser automation, connect messaging platforms, and somehow get the agent to understand your data schema. Most people give up halfway through and end up with a half-working Notion integration.\n\nDenchClaw is an open-source framework that turns OpenClaw into a fully local CRM, sales automation, and productivity platform — installed with a single command and running entirely on your machine.\n\n## Pain Point\n\nOpenClaw is incredibly powerful as a primitive, but using it for real business workflows (lead tracking, outbound, pipeline management) requires stitching together a dozen tools: a database, a UI, browser access, messaging integrations, file management. Every new integration means more manual setup, more credentials to manage, and more things that break. You want Cursor-level UX for your business operations, not a pile of shell scripts.\n\n## What It Does\n\n- **One-command setup**: `npx denchclaw` installs everything — DuckDB database, web UI, OpenClaw profile, browser automation, skills — and opens at `localhost:3100`\n- **Natural language CRM**: Ask \"show me companies with more than 5 employees\" and it updates the view live. No manual filters needed\n- **Full browser automation**: Copies your Chrome profile so the agent has your same auth state — say \"import everything from my HubSpot\" and it logs in, exports, and imports\n- **Multiple views**: Table, Kanban, Calendar, Timeline (Gantt), Gallery, and List views — all configurable by the agent via YAML\n- **App builder**: OpenClaw builds self-contained web apps (dashboards, tools, games) that run inside the workspace with access to your data\n- **File-system-first**: Table filters, views, column toggles, calendar settings — everything is a file, so OpenClaw can directly read and modify it\n- **Works as a coding agent**: DenchClaw built DenchClaw. It's also a full file tree browser and code editor for your Mac\n\n## How to Set It Up\n\n1. Install with one command:\n\n```bash\nnpx denchclaw\n```\n\n2. Complete the onboarding wizard. DenchClaw creates a dedicated OpenClaw profile called `dench` and starts a gateway on port 19001.\n\n3. Open `localhost:3100` in your browser. On Safari, add it to your Dock as a PWA.\n\n4. Start talking to it:\n\n```text\nHey, create a \"Leads\" object with fields: Name, Email, Company, Status (New/Contacted/Qualified/Won/Lost), and Notes. Import this CSV of leads I downloaded from Apollo.\n```\n\n```text\nShow me all leads where Status is \"Contacted\" and sort by last updated. Switch to Kanban view grouped by Status.\n```\n\n```text\nGo to my LinkedIn, find the last 20 people who viewed my profile, and add them as leads with their company info enriched.\n```\n\n```text\nDraft a personalized outreach email to each lead in \"New\" status based on their company's recent news. Save the drafts in a new \"Outreach Drafts\" document.\n```\n\n5. You can also use it from Telegram or any connected messaging platform — manage your pipeline from your phone while on the go.\n\n## Skills Needed\n\nDenchClaw bundles all required skills automatically:\n\n- **CRM Skill** — DuckDB-backed structured data management with objects, fields, entries, and multiple view types\n- **App Builder Skill** — Build web apps (dashboards, tools) that run inside the workspace with access to your database\n- **Browser Automation Skill** — Chromium browser with your existing Chrome auth state for web scraping, imports, and outreach\n\nNo additional skill installation or configuration required.\n\n## Key Insights\n\n- **File-system = agent-native UI**: Because every setting, filter, and view is stored as a YAML/markdown file, OpenClaw can modify the UI as naturally as it edits code. No API wrappers needed.\n- **DuckDB is the sweet spot**: Smallest, most performant embedded database that still supports full SQL. No server process, no credentials, no network — just a file.\n- **Chrome profile cloning is a superpower**: Instead of fighting OAuth flows and API rate limits, DenchClaw copies your browser's auth state. The agent sees what you see, does what you do.\n- **One `npx` command beats a weekend of setup**: The entire stack (database, web UI, OpenClaw profile, gateway, browser, skills) installs and configures itself. No Docker, no env files, no dependency hell.\n\n## Demo\n\n[Watch the demo video](https://www.youtube.com/watch?v=pfACTbc3Bh4#t=43) — shows the full workflow from install to managing a live CRM pipeline with natural language.\n\n## Related Links\n\n- [DenchClaw GitHub](https://github.com/DenchHQ/DenchClaw) — MIT licensed, open source\n- [DenchClaw Website](https://denchclaw.com)\n- [Discord Community](https://discord.gg/PDFXNVQj9n)\n- [Skills Store](https://skills.sh)\n"},"category":"productivity"};
+  </script>
+  <script type="module" src="../js/case.js"></script>
+</body>
+</html>
